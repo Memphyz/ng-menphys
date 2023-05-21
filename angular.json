@@ -9,6 +9,15 @@
       "sourceRoot": "projects/menphys/src",
       "prefix": "menphys",
       "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/menphys/**/*.ts",
+              "projects/menphys/**/*.html"
+            ]
+          }
+        },
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
@@ -47,6 +56,15 @@
       "sourceRoot": "projects/menphys-view/src",
       "prefix": "menphys-view",
       "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/menphys-view/**/*.ts",
+              "projects/menphys-view/**/*.html"
+            ]
+          }
+        },
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {

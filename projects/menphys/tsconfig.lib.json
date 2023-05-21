@@ -6,9 +6,13 @@
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
-    "types": []
+    "types": [],
   },
   "exclude": [
     "**/*.spec.ts"
-  ]
+  ],
+  "include": [
+    "./src/**/*",
+    "./assets/**/*",
+  ],
 }

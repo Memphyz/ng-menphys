@@ -9,13 +9,19 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "strictPropertyInitialization": false,
     "paths": {
       "menphys": [
         "dist/menphys"
       ],
       "ng-menphys": [
         "dist/ng-menphys"
-      ]
+      ],
+      "@menphys/*": [
+        "./projects/menphys/src/lib/*"
+      ],
     },
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
@@ -26,7 +32,7 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
-    "useDefineForClassFields": false,
+    "useDefineForClassFields": true,
     "lib": [
       "ES2022",
       "dom"
