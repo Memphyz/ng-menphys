@@ -1,0 +1,15 @@
+input {
+  min-height: 35px;
+  margin: 15px 0px;
+  font-size: 1.2rem;
+  width: 100%;
+  outline: none;
+  border: 1.5px solid var(--disabled-1);
+  transition: all 0.5s;
+  border-radius: 6px;
+
+  &:focus {
+
+    border: 1.5px solid var(--disabled-3);
+  }
+}

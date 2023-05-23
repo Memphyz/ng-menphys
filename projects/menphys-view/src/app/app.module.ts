@@ -11,7 +11,9 @@ import { MenphysModule } from 'menphys';
   ],
   imports: [
     BrowserModule,
-    MenphysModule,
+    MenphysModule.forRoot({
+      theme: 'dark'
+    }),
     AppRoutingModule
   ],
   providers: [],

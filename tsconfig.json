@@ -11,6 +11,8 @@
     "noImplicitReturns": true,
     "noImplicitAny": false,
     "strictNullChecks": false,
+    "resolveJsonModule": true,
+    "noUncheckedIndexedAccess": false,
     "strictPropertyInitialization": false,
     "paths": {
       "menphys": [
