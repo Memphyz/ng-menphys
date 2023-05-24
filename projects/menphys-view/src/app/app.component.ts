@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SidenavItem } from '@menphys/models/sidenav/sidenav-item';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'menphys-view';
+
+  public items: SidenavItem[] = [
+    new SidenavItem('Inputs')
+  ]
 
 }

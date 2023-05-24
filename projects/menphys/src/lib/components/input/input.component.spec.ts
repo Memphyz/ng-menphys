@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
 
 import { InputComponent } from './input.component';
 
@@ -8,7 +9,7 @@ describe('InputComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [InputComponent]
+      declarations: [ InputComponent ]
     });
     fixture = TestBed.createComponent(InputComponent);
     component = fixture.componentInstance;
@@ -16,6 +17,9 @@ describe('InputComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component)
+      .toBeTruthy();
   });
+
+
 });

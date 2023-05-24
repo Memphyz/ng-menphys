@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'menphys-theme-changer',
   templateUrl: './theme-changer.component.html',
-  styleUrls: ['./theme-changer.component.css']
+  styleUrls: [ './theme-changer.component.scss' ]
 })
 export class ThemeChangerComponent {
 
