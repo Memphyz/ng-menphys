@@ -1,0 +1,101 @@
+:host {
+  height: 100%;
+  position: relative;
+
+  aside {
+    min-width: 15px;
+    width: 0%;
+    background-color: var(--brand-color-7);
+    height: 100%;
+    max-width: 300px;
+    transition: all 0.5s;
+    box-shadow: 0px 0px 10px var(--brand-color-8);
+
+    ul {
+      opacity: 0;
+      max-width: 300px;
+      background-color: var(--brand-color-7);
+      transition: all 0.5s;
+      list-style-type: none;
+      overflow: hidden;
+      height: 100%;
+      padding: 20px 0px;
+      position: relative;
+
+      &.child {
+        padding: 0px 6px 10px 15px !important;
+        margin-top: 10px;
+        max-height: 0vh;
+
+        &.show {
+          max-height: 90vh;
+        }
+      }
+
+      li {
+        width: 100%;
+        transition: all 0.5s;
+        margin: 15px 0px;
+
+        .group {
+          h3 {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 30px 0px 20px;
+            gap: 10px;
+
+            &::before {
+              content: '⟵';
+            }
+
+            &::after {
+              content: '⟶';
+            }
+          }
+
+          ul {
+            padding: 0px;
+          }
+        }
+
+        .content {
+          transition: all 0.5s;
+          cursor: pointer;
+          border-radius: 6px;
+          background-color: var(--brand-color-4);
+          padding: 10px;
+          display: flex;
+          gap: 10px;
+          align-items: center;
+
+          span {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          &:hover {
+            background-color: var(--brand-color-6);
+          }
+
+        }
+
+
+
+      }
+    }
+
+    &:hover {
+      width: 100%;
+      max-width: 300px;
+      overflow: auto;
+
+      ul {
+        overflow: auto;
+        opacity: 1;
+        padding: 20px;
+      }
+    }
+  }
+}

@@ -5,6 +5,7 @@ import { ThemeChangerComponent } from './theme-changer/theme-changer.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { IconComponent } from './icon/icon.component';
 import { SharedModule } from '@menphys/shared/shared.module';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -17,6 +18,7 @@ import { SharedModule } from '@menphys/shared/shared.module';
   ],
   imports: [
     CommonModule,
+    RouterModule,
     SharedModule
   ],
   exports: [

@@ -8,5 +8,10 @@
   "dependencies": {
     "tslib": "^2.3.0"
   },
+  "exports": {
+    "./menphys": {
+      "sass": "./assets/styles/_menphys.scss"
+    }
+  },
   "sideEffects": false
 }

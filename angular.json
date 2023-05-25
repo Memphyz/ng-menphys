@@ -37,10 +37,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/menphys/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
+            "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
       }
@@ -71,17 +68,21 @@
             "outputPath": "dist/menphys-view",
             "index": "projects/menphys-view/src/index.html",
             "main": "projects/menphys-view/src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "projects/menphys-view/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               "projects/menphys-view/src/favicon.ico",
-              "projects/menphys-view/src/assets"
+              "projects/menphys-view/src/assets",
+              {
+                "glob": "*.svg",
+                "input": "node_modules/menphys/assets/icons",
+                "output": "assets/icons/"
+              }
             ],
             "styles": [
-              "projects/menphys-view/src/styles.scss"
+              "projects/menphys-view/src/styles.scss",
+              "node_modules/menphys/assets/styles/_menphys.scss"
             ],
             "scripts": []
           },
@@ -133,19 +134,14 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/menphys-view/tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               "projects/menphys-view/src/favicon.ico",
               "projects/menphys-view/src/assets"
             ],
-            "styles": [
-              "projects/menphys-view/src/styles.scss"
-            ],
+            "styles": ["projects/menphys-view/src/styles.scss"],
             "scripts": []
           }
         }

@@ -1,1 +1,67 @@
-<p>sidenav works!</p>
+<aside>
+  <ng-container *ngTemplateOutlet="itemsRef; context: {$implicit: converted}"></ng-container>
+</aside>
+
+<ng-template
+  #childsRef
+  let-children
+>
+  <ng-container *ngFor="let child of children">
+    <ng-container *ngIf="child.show && child.children?.length">
+      <ng-container *ngTemplateOutlet="itemsRef; context: {$implicit: child.children, child: true}"></ng-container>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+
+<ng-template
+  #itemsRef
+  let-navs
+  let-child="child"
+  let-show="show"
+>
+  <ul
+    [class.child]="child"
+    [class.show]="show"
+  >
+    <li *ngFor="let item of navs">
+      <ng-container [ngSwitch]="getType(item)">
+        <ng-container *ngSwitchCase="'PrivSidenavItem'">
+          <div
+            class="content"
+            [routerLink]="item.children?.length ? null : item.routerLink"
+            [queryParams]="item.children?.length ? null : item.queryParams"
+            routerLinkActive="router-link-active"
+            (click)="item.children?.length && changeShow(item)"
+          >
+            <menphys-icon
+              *ngIf="item.icon"
+              [name]="item.icon.name"
+              [color]="item.icon.color"
+              [size]="item.icon.size || 18"
+            ></menphys-icon>
+            <span>
+              {{item.name}}
+            </span>
+          </div>
+          <ng-container *ngIf="item.createChilds && item.children?.length">
+            <ng-container
+              *ngTemplateOutlet="itemsRef; context: {$implicit: item.children, child: true, show: item.show}"
+            ></ng-container>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="'SidenavGroupItem'">
+          <div class="group">
+            <h3>
+              {{item.name}}
+            </h3>
+            <ng-container *ngTemplateOutlet="itemsRef; context: {$implicit: item.items}"></ng-container>
+          </div>
+        </ng-container>
+
+      </ng-container>
+
+
+    </li>
+  </ul>
+</ng-template>

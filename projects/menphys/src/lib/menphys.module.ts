@@ -37,7 +37,7 @@ export class MenphysModule {
     MenphysModule.config = config;
     return {
       ngModule: MenphysModule,
-      providers: [ ]
+      providers: []
     };
   }
 
@@ -45,11 +45,10 @@ export class MenphysModule {
 
   constructor (private readonly injector: Injector) {
     MenphysModule.Injector = this.injector;
-    const theme = {light, dark};
+    const theme = { light, dark };
     const config = MenphysModule.config as ModuleConfig;
-    console.log(theme[config.theme || 'dark'])
-    Object.entries(theme[config.theme || 'dark']).filter(([_key, value]) => typeof value === 'string').forEach(([key, color]) => {
-      document.documentElement.style.setProperty(`--${key}`, color as string)
+    Object.entries(theme[ config.theme || 'dark' ]).filter(([ _key, value ]) => typeof value === 'string').forEach(([ key, color ]) => {
+      document.documentElement.style.setProperty(`--${ key }`, color as string)
     })
   }
 
