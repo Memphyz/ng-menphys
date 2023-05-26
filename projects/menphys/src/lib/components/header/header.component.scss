@@ -1,0 +1,14 @@
+:host {
+  width: 100%;
+
+  header {
+    transition: all 0.5s;
+    padding: 5px 20px;
+    min-height: 90px;
+    width: calc(100%);
+    display: flex;
+    background-color: var(--brand-color-7);
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px var(--brand-color-8);
+  }
+}
