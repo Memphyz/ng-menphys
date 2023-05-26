@@ -16,7 +16,9 @@ export class IconComponent implements AfterContentChecked {
   * @type {string}
   * @memberof Icon
   */
-  @Input({ required: true }) public name: string;
+  @HostBinding('style.--name')
+  @Input({ required: true })
+  public name: string;
 
   /**
    * Size of the icon in pixels.
@@ -36,6 +38,7 @@ export class IconComponent implements AfterContentChecked {
    */
   @Input() public color?: string | 'default' = 'var(--text-color)';
 
+  @HostBinding('style.--size.px')
   @HostBinding('style.width.px')
   @HostBinding('style.height.px')
   public get _size(): number {
