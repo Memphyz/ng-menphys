@@ -1,0 +1,19 @@
+:host {
+
+  #page-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 1360px;
+    margin: 20px auto;
+
+    main {
+      height: calc(100% - 180px);
+      width: 100%;
+      background-color: var(--brand-color-7);
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px var(--brand-color-8);
+    }
+  }
+}

@@ -1,0 +1,18 @@
+<menphys-sidenav [items]="items">
+  <div id="page-content">
+    <menphys-header>
+      <menphys-input
+        [maxlength]="999"
+        type="search"
+        [righticon]="{
+        name: 'search',
+        size: 30
+      }"
+        placeholder="Search"
+      />
+    </menphys-header>
+    <main>
+      <router-outlet />
+    </main>
+  </div>
+</menphys-sidenav>
