@@ -20,4 +20,5 @@ import { MenphysModule } from 'menphys';
   ],
   bootstrap: [ FeatureComponent ]
 })
-export class FeaturesModule { }
+export class FeaturesModule {
+}

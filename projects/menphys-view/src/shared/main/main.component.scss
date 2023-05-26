@@ -1,19 +1,48 @@
 :host {
+  menphys-sidenav {
+    margin-right: 10px;
 
-  #page-content {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
-    max-width: 1360px;
-    margin: 20px auto;
-
-    main {
-      height: calc(100% - 180px);
+    #page-content {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
       width: 100%;
-      background-color: var(--brand-color-7);
-      border-radius: 8px;
-      box-shadow: 0px 0px 10px var(--brand-color-8);
+      max-width: 1360px;
+      margin: 20px auto;
+
+      main {
+        height: calc(100vh - 255px);
+        width: 100%;
+        background-color: var(--brand-color-7);
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px var(--brand-color-8);
+        padding: 30px;
+      }
+
+      footer {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        overflow: hidden;
+        transition: all 0.5s;
+        justify-content: space-between;
+
+        div {
+          justify-content: flex-end;
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+
+          span {
+            color: var(--text-color);
+            opacity: 0.5;
+
+            span {
+              opacity: 0.4;
+            }
+          }
+        }
+      }
     }
   }
 }
