@@ -12,6 +12,7 @@ body {
   box-sizing: border-box;
   color: var(--text-color);
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  transition: background-color 0.5s;
 }
 
 .ellipsis {

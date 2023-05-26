@@ -11,10 +11,10 @@ import { RouterModule } from '@angular/router';
   declarations: [],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     CommonModule,
     RouterModule,
-    FormsModule,
-    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class SharedModule { }

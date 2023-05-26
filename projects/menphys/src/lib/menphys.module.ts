@@ -29,7 +29,7 @@ interface ModuleConfig {
 })
 export class MenphysModule {
 
-  private static config: ModuleConfig = {
+  public static config: ModuleConfig = {
     theme: 'dark'
   };
 
@@ -45,11 +45,20 @@ export class MenphysModule {
 
   constructor (private readonly injector: Injector) {
     MenphysModule.Injector = this.injector;
+    MenphysModule.reloadTheme();
+  }
+
+  private static reloadTheme(): void {
     const theme = { light, dark };
     const config = MenphysModule.config as ModuleConfig;
     Object.entries(theme[ config.theme || 'dark' ]).filter(([ _key, value ]) => typeof value === 'string').forEach(([ key, color ]) => {
-      document.documentElement.style.setProperty(`--${ key }`, color as string)
-    })
+      document.documentElement.style.setProperty(`--${ key }`, color as string);
+    });
+  }
+
+  public static changeTheme(theme: typeof MenphysModule.config.theme) {
+    MenphysModule.config.theme = theme;
+    MenphysModule.reloadTheme();
   }
 
   public static Inject<T>(token: ProviderToken<T>): T {

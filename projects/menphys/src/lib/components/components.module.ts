@@ -6,6 +6,8 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { IconComponent } from './icon/icon.component';
 import { SharedModule } from '@menphys/shared/shared.module';
 import { RouterModule } from '@angular/router';
+import { HeaderComponent } from './header/header.component';
+import { InputSearchComponent } from './input/input-search/input-search.component';
 
 
 
@@ -14,7 +16,9 @@ import { RouterModule } from '@angular/router';
     InputComponent,
     ThemeChangerComponent,
     SidenavComponent,
-    IconComponent
+    IconComponent,
+    HeaderComponent,
+    InputSearchComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +28,9 @@ import { RouterModule } from '@angular/router';
   exports: [
     InputComponent,
     ThemeChangerComponent,
-    SidenavComponent
+    SidenavComponent,
+    IconComponent,
+    HeaderComponent
   ]
 })
 export class ComponentsModule { }
