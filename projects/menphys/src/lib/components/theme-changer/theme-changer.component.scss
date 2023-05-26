@@ -1,0 +1,16 @@
+:host {
+  cursor: pointer;
+
+  .changer {
+    position: relative;
+    overflow: hidden;
+    height: 35px;
+    width: 35px;
+
+    menphys-icon {
+      transition: all 0.5s;
+      position: absolute;
+      top: 0;
+    }
+  }
+}
