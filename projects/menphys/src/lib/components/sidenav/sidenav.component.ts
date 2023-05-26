@@ -38,6 +38,13 @@ export class SidenavComponent implements OnInit {
   @Input({ required: true }) public items: (SidenavItem | SidenavGroupItem)[];
 
   /**
+   * Create a theme changer on bottom sidenav
+   *
+   * @memberof SidenavComponent
+   */
+  @Input() public theme = true;
+
+  /**
    * Items that will be rendered on conponent converted with private attributes
    *
    * @type {PrivSidenavItem[]}

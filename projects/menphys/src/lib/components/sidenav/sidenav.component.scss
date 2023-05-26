@@ -1,6 +1,8 @@
 :host {
   height: 100%;
   position: relative;
+  display: flex;
+  gap: 10px;
 
   aside {
     min-width: 15px;
@@ -10,6 +12,25 @@
     max-width: 300px;
     transition: all 0.5s;
     box-shadow: 0px 0px 10px var(--brand-color-8);
+
+    &.theme {
+      .bottom-options {
+        overflow: hidden;
+        transition: all 0.5s;
+        opacity: 0;
+        margin: 12px 15px;
+        display: flex;
+        align-items: flex-end;
+
+        menphys-theme-changer {
+          overflow: hidden;
+        }
+      }
+
+      ul {
+        height: calc(100% - 60px);
+      }
+    }
 
     ul {
       opacity: 0;
@@ -89,12 +110,15 @@
     &:hover {
       width: 100%;
       max-width: 300px;
-      overflow: auto;
 
       ul {
         overflow: auto;
         opacity: 1;
         padding: 20px;
+      }
+
+      .bottom-options {
+        opacity: 1;
       }
     }
   }

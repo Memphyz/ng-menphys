@@ -1,6 +1,10 @@
-<aside>
+<aside [class.theme]="theme">
   <ng-container *ngTemplateOutlet="itemsRef; context: {$implicit: converted}"></ng-container>
+  <div class="bottom-options">
+    <menphys-theme-changer />
+  </div>
 </aside>
+<ng-content />
 
 <ng-template
   #childsRef
@@ -39,7 +43,7 @@
               [name]="item.icon.name"
               [color]="item.icon.color"
               [size]="item.icon.size || 18"
-            ></menphys-icon>
+            />
             <span>
               {{item.name}}
             </span>
@@ -58,10 +62,7 @@
             <ng-container *ngTemplateOutlet="itemsRef; context: {$implicit: item.items}"></ng-container>
           </div>
         </ng-container>
-
       </ng-container>
-
-
     </li>
   </ul>
 </ng-template>
