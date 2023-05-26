@@ -1,16 +1,72 @@
-<input
-  [accept]="accept"
-  [autocomplete]="autocomplete"
-  [attr.autocorrect]="autocorrect"
-  [autofocus]="autofocus"
-  [checked]="checked"
-  [disabled]="disabled"
-  [incremental]="incremental"
-  [max]="max"
-  [attr.maxlength]="maxlength"
-  [min]="min"
-  [attr.minlength]="minlength"
-  [multiple]="multiple"
-  [name]="name"
-  [pattern]="pattern"
-/>
+<div class="input-container">
+  <label
+    *ngIf="name"
+    [for]="name"
+  >{{name}}</label>
+  <ng-container *ngTemplateOutlet="inputsRef"></ng-container>
+</div>
+
+<ng-template #inputsRef>
+  <ng-container [ngSwitch]="type">
+    <ng-container *ngSwitchCase="types.search">
+      <menphys-input-search
+        [righticon]="righticon"
+        [lefticon]="lefticon"
+        [accept]="accept"
+        [autocomplete]="autocomplete"
+        [autocorrect]="autocorrect"
+        [autofocus]="autofocus"
+        [checked]="checked"
+        [disabled]="disabled"
+        [incremental]="incremental"
+        [max]="max"
+        [maxlength]="maxlength"
+        [min]="min"
+        [attr.minlength]="minlength"
+        [multiple]="multiple"
+        [name]="name"
+        [pattern]="pattern"
+        [type]="type === 'search' ? types.text : type"
+        [placeholder]="placeholder"
+      />
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+      <ng-container *ngTemplateOutlet="inputRef"></ng-container>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #inputRef>
+  <div
+    class="input-wrapper"
+    [style]="rightIcon ? '--right-icon-size: ' +  (rightIcon.size || 18) + 'px' : null"
+  >
+    <menphys-icon
+      *ngIf="rightIcon"
+      [name]="rightIcon.name"
+      [color]="rightIcon.color"
+      [size]="rightIcon.size || 18"
+      (click)="inputHTMLElement.focus()"
+    />
+    <input
+      #inputHTMLElement
+      [accept]="accept"
+      [autocomplete]="autocomplete"
+      [attr.autocorrect]="autocorrect"
+      [autofocus]="autofocus"
+      [checked]="checked"
+      [disabled]="disabled"
+      [incremental]="incremental"
+      [max]="max"
+      [attr.maxlength]="maxlength"
+      [min]="min"
+      [attr.minlength]="minlength"
+      [multiple]="multiple"
+      [name]="name"
+      [pattern]="pattern"
+      [type]="type"
+      [placeholder]="placeholder"
+    />
+    <span></span>
+  </div>
+</ng-template>

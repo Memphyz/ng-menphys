@@ -1,15 +1,77 @@
-input {
-  min-height: 35px;
+:host {
   margin: 15px 0px;
-  font-size: 1.2rem;
-  width: 100%;
-  outline: none;
-  border: 1.5px solid var(--disabled-1);
-  transition: all 0.5s;
-  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-  &:focus {
+  &.input-right-icon {
+    .input-wrapper {
+      span {
+        display: none;
+      }
 
-    border: 1.5px solid var(--disabled-3);
+      input {
+        width: 0%;
+
+        &:not(:focus) {
+          padding-left: calc(var(--right-icon-size) + 5px);
+          border-radius: calc(var(--right-icon-size) * 2);
+        }
+
+        &:focus {
+          width: 100%;
+          border-radius: 4px;
+        }
+      }
+    }
+  }
+
+  .input-wrapper {
+    position: relative;
+
+    menphys-icon {
+      cursor: pointer;
+    }
+
+    >menphys-icon {
+      position: absolute;
+      top: calc(50% - (var(--size) / 2));
+      left: 6.5px;
+
+      ~input {
+        padding-left: calc(var(--right-icon-size) + 15px);
+      }
+    }
+
+    input {
+      min-height: 35px;
+      font-size: 1.2rem;
+      width: 100%;
+      outline: none;
+      border: 0px;
+      transition: all 0.5s;
+      border-radius: 4px;
+      padding: 5px 10px;
+      background-color: rgba(139, 139, 139, 0.09);
+
+      &:focus {
+        ~span {
+          left: 0%;
+          width: 100%;
+        }
+      }
+    }
+
+    span {
+      position: absolute;
+      width: 0%;
+      height: 1px;
+      left: 50%;
+      bottom: 0;
+      background-color: var(--text-color);
+      transition: all 0.5s;
+
+
+    }
   }
 }
