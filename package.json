@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "watch-lib": "ng build menphys --watch --configuration development",
-    "version": "ts-node -O \"{\\\"module\\\":\\\"commonjs\\\", \\\"target\\\":\\\"ES2017\\\"}\" scripts/version.ts",
+    "version": "ts-node -O \"{\\\"module\\\":\\\"commonjs\\\", \\\"target\\\":\\\"ES2017\\\"}\" scripts/git.version.ts",
     "test": "ng test",
     "lint": "ng lint",
     "prepare": "husky install"
@@ -50,5 +50,10 @@
     "karma-jasmine-html-reporter": "~2.0.0",
     "ng-packagr": "^16.0.0",
     "typescript": "~5.0.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run version"
+    }
   }
 }
