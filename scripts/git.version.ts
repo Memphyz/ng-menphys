@@ -16,7 +16,7 @@ async function createVersionsFile(filename: string) {
   const actualVersion = Number(versions.version.split('.').pop());
   const npmVersions = process.env[ 'npm_package_version' ].split('.').splice(0, 2).join('.');
   const isHooked = process.argv.includes('--git');
-  const newsubversion = isHooked ? (total - 1) : total;
+  const newsubversion = isHooked ? (total - 2) : total;
   const isSameVersion = newsubversion <= actualVersion;
   if (isSameVersion) {
     return undefined;
