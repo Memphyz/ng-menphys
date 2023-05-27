@@ -11,8 +11,8 @@ import { MainUtils } from './main.utils';
 export class MainComponent implements OnInit {
 
   public readonly version = versions;
-
   public hide = false;
+
   public readonly items: (SidenavItem | SidenavGroupItem)[] = [
     new SidenavItem('Home', [ 'home' ], null, new Icon('home')),
     new SidenavGroupItem('Library', MainUtils.getLibrarys()),
