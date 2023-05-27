@@ -1,5 +1,8 @@
 <menphys-sidenav [items]="items">
-  <div id="page-content">
+  <div
+    id="page-content"
+    [class.hide-footer]="hide"
+  >
     <menphys-header>
       <menphys-input
         [maxlength]="999"

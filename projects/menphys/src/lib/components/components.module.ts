@@ -9,8 +9,6 @@ import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { InputSearchComponent } from './input/input-search/input-search.component';
 
-
-
 @NgModule({
   declarations: [
     InputComponent,

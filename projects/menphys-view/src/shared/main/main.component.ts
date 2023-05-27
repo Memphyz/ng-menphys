@@ -1,23 +1,29 @@
-import { Component } from '@angular/core';
-import { SidenavItem, SidenavGroupItem, Icon } from 'menphys';
+import { Component, type OnInit } from '@angular/core';
+import { Icon, SidenavGroupItem, SidenavItem } from 'menphys';
 import { versions } from '../../environments/versions';
+import { MainUtils } from './main.utils';
 
 @Component({
   selector: 'menphys-view-main',
   templateUrl: './main.component.html',
   styleUrls: [ './main.component.scss' ]
 })
-export class MainComponent {
+export class MainComponent implements OnInit {
 
   public readonly version = versions;
+
+  public hide = false;
   public readonly items: (SidenavItem | SidenavGroupItem)[] = [
-    new SidenavGroupItem('Components', [
-      new SidenavItem({
-        name: 'Inputs',
-        icon: new Icon('input')
-      }),
-    ])
-  ]
+    new SidenavItem('Home', [ 'home' ], null, new Icon('home')),
+    new SidenavGroupItem('Library', MainUtils.getLibrarys()),
+    new SidenavGroupItem('Components', MainUtils.getComponents())
+  ];
+
+  public ngOnInit(): void {
+    setTimeout(() => {
+      this.hide = true;
+    }, 5000)
+  }
 
   public getTime(date: string): string {
     const dateTime = new Date(date);

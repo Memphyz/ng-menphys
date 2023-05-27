@@ -1,21 +1,19 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { FeaturesRoutingModule } from './features-routing.module';
-import { BrowserModule } from '@angular/platform-browser';
 import { FeatureComponent } from './feature.component';
-import { ThemeChangerViewComponent } from './theme-changer-view/theme-changer-view.component';
-import { MenphysModule } from 'menphys';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { HomeComponent } from './home/home.component';
 
 
 
 @NgModule({
-  declarations: [ FeatureComponent, ThemeChangerViewComponent ],
+  declarations: [ FeatureComponent, HomeComponent ],
   imports: [
     BrowserModule,
-    CommonModule,
+    HttpClientModule,
     SharedModule,
-    MenphysModule,
     FeaturesRoutingModule
   ],
   bootstrap: [ FeatureComponent ]

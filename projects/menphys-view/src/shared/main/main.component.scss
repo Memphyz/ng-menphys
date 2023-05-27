@@ -10,10 +10,35 @@
       max-width: 1360px;
       margin: 20px auto;
 
+      &.hide-footer {
+        position: relative;
+
+        main {
+          height: calc(100vh - 140px)
+        }
+
+        footer {
+          height: 0px;
+          overflow: hidden;
+
+          div:nth-child(2) {
+            position: absolute;
+            bottom: -15px;
+            right: 0;
+
+            span {
+              text-align: center;
+              margin: 0px 15px;
+            }
+          }
+        }
+      }
+
       main {
         height: calc(100vh - 255px);
         width: 100%;
         background-color: var(--brand-color-7);
+        transition: all 0.5s;
         border-radius: 8px;
         box-shadow: 0px 0px 10px var(--brand-color-8);
         padding: 30px;
@@ -23,9 +48,21 @@
         display: flex;
         flex-wrap: wrap;
         gap: 30px;
-        overflow: hidden;
+        overflow: auto;
         transition: all 0.5s;
         justify-content: space-between;
+
+        @media screen and (max-width: 768px) {
+          flex-direction: column;
+          flex-wrap: inherit;
+          gap: 0px;
+          overflow: hidden;
+
+          div {
+            width: 100%;
+            gap: 0px !important;
+          }
+        }
 
         div {
           justify-content: flex-end;
@@ -36,6 +73,9 @@
           span {
             color: var(--text-color);
             opacity: 0.5;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
 
             span {
               opacity: 0.4;

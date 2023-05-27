@@ -1,4 +1,14 @@
-<aside [class.theme]="theme">
+<menphys-icon
+  #close
+  class="close"
+  name="close"
+  color="var(--text-color)"
+  [size]="20"
+></menphys-icon>
+<aside
+  [class.theme]="theme"
+  #aside
+>
   <ng-container *ngTemplateOutlet="itemsRef; context: {$implicit: converted}"></ng-container>
   <div class="bottom-options">
     <menphys-theme-changer />

@@ -1,11 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, type Routes } from '@angular/router';
-import { ThemeChangerViewComponent } from './theme-changer-view/theme-changer-view.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component: ThemeChangerViewComponent
+    path: 'home',
+    component: HomeComponent
+  },
+  {
+    path: 'library',
+    loadChildren: () => import('./library/library.module').then(m => m.LibraryModule)
+  },
+  {
+    path: 'components',
+    loadChildren: () => import('./components/components.module').then(m => m.ComponentsModule)
   }
 ];
 

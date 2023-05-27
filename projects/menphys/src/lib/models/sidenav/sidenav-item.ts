@@ -61,13 +61,8 @@ export class SidenavItem {
 
   }
 
-  constructor (name: string);
   constructor (config: Omit<SidenavItem, 'BUILDER'>);
-  constructor (name: string, routerLink: string[]);
-  constructor (name: string, routerLink: string[], queryParams: Record<string, unknown>);
-  constructor (name: string, routerLink: string[], queryParams: Record<string, unknown>, icon: string | Icon);
-  constructor (name: string, routerLink: string[], queryParams: Record<string, unknown>, icon: string | Icon, conditional: boolean | (() => boolean));
-  constructor (name: string, routerLink: string[], queryParams: Record<string, unknown>, icon: string | Icon, conditional: boolean | (() => boolean), children: SidenavItem[]);
+  constructor (name: string, routerLink?: string[], queryParams?: Record<string, unknown>, icon?: string | Icon, conditional?: boolean | (() => boolean), children?: SidenavItem[]);
 
   constructor (...arr: unknown[]) {
     this.BUILDER[ arr.length ](...arr);

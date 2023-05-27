@@ -9,7 +9,8 @@ import { RouterModule } from '@angular/router';
     MainComponent
   ],
   exports: [
-    MainComponent
+    MainComponent,
+    MenphysModule
   ],
   imports: [
     CommonModule,
