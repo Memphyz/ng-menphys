@@ -1,7 +1,7 @@
 import { Component, type OnInit } from '@angular/core';
 import { Icon, SidenavGroupItem, SidenavItem } from 'menphys';
-import { versions } from '../../environments/versions';
 import { MainUtils } from './main.utils';
+import { versions } from '../../environments/versions';
 
 @Component({
   selector: 'menphys-view-main',
