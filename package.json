@@ -53,7 +53,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run version"
+      "pre-commit": "npm run version -- --git"
     }
   }
 }
