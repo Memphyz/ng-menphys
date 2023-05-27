@@ -65,7 +65,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/menphys-view",
+            "outputPath": "docs",
             "index": "projects/menphys-view/src/index.html",
             "main": "projects/menphys-view/src/main.ts",
             "polyfills": ["zone.js"],
