@@ -24,6 +24,7 @@
     "@angular/router": "^16.0.0",
     "husky": "^8.0.3",
     "menphys": "file:dist/menphys",
+    "ngx-highlightjs": "^9.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "tslint": "^6.1.3",

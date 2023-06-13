@@ -5,11 +5,12 @@ import { FeatureComponent } from './feature.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
+import { IconsViewComponent } from './icons-view/icons-view.component';
 
 
 
 @NgModule({
-  declarations: [ FeatureComponent, HomeComponent ],
+  declarations: [ FeatureComponent, HomeComponent, IconsViewComponent ],
   imports: [
     BrowserModule,
     HttpClientModule,

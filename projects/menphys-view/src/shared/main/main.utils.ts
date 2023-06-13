@@ -3,7 +3,14 @@ import { Icon, SidenavItem } from "menphys";
 export class MainUtils {
   public static getComponents(): SidenavItem[] {
     return [
-      new SidenavItem('Theme Changer', [ 'components', 'theme-changer-view' ], undefined, new Icon('theme'))
+      new SidenavItem('Theme Changer', [ 'components', 'theme-changer-view' ], undefined, new Icon('theme')),
+      new SidenavItem('Inputs', [ 'components', 'inputs-view' ], undefined, new Icon('input'))
+    ]
+  }
+
+  public static getUtils(): SidenavItem[] {
+    return [
+      new SidenavItem('Icons', [ 'icons' ], undefined, new Icon('icons'))
     ]
   }
 

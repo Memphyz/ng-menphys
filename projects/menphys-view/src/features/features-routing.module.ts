@@ -1,11 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, type Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { IconsViewComponent } from './icons-view/icons-view.component';
 
 const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent
+  },
+  {
+    path: 'icons',
+    component: IconsViewComponent
   },
   {
     path: 'library',

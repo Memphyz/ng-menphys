@@ -1,0 +1,10 @@
+<article class="content">
+  <h3>{{documentation.title}}</h3>
+  <span class="desc">{{documentation.description}}</span>
+  <ng-container *ngIf="documentation.example">
+    <pre>
+      <code [highlight]="documentation.example.code" [lineNumbers]="true" [languages]="['xml', 'typescript', 'css']"></code>
+    </pre>
+  </ng-container>
+
+</article>

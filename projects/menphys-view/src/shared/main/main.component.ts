@@ -16,7 +16,8 @@ export class MainComponent implements OnInit {
   public readonly items: (SidenavItem | SidenavGroupItem)[] = [
     new SidenavItem('Home', [ 'home' ], null, new Icon('home')),
     new SidenavGroupItem('Library', MainUtils.getLibrarys()),
-    new SidenavGroupItem('Components', MainUtils.getComponents())
+    new SidenavGroupItem('Components', MainUtils.getComponents()),
+    new SidenavGroupItem('Utils', MainUtils.getUtils())
   ];
 
   public ngOnInit(): void {
