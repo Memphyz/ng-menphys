@@ -29,7 +29,8 @@
     max-width: 300px;
     transition: all 0.5s;
     box-shadow: 0px 0px 10px var(--brand-color-8);
-    position: relative;
+    position: fixed;
+    z-index: 2096;
 
     &::before {
       content: '';
@@ -49,9 +50,9 @@
     &:not(:hover)::before {
       content: '';
       opacity: 1;
-      right: 12px;
-      width: 15px;
-      height: 15px;
+      right: 10px;
+      width: 10px;
+      height: 10px;
 
     }
 
@@ -190,5 +191,10 @@
         opacity: 1;
       }
     }
+  }
+
+  .content-page {
+    margin-left: 45px;
+    width: calc(100% - 45px);
   }
 }

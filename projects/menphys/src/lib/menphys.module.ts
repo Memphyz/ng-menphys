@@ -33,6 +33,8 @@ export class MenphysModule {
     theme: 'dark'
   };
 
+  public static onThemeChange: (theme: 'dark' | 'light') => void;
+
   public static forRoot(config?: ModuleConfig): ModuleWithProviders<MenphysModule> {
     MenphysModule.config = config;
     return {
@@ -54,6 +56,7 @@ export class MenphysModule {
     Object.entries(theme[ config.theme || 'dark' ]).filter(([ _key, value ]) => typeof value === 'string').forEach(([ key, color ]) => {
       document.documentElement.style.setProperty(`--${ key }`, color as string);
     });
+    MenphysModule.onThemeChange && MenphysModule.onThemeChange(MenphysModule.config.theme);
   }
 
   public static changeTheme(theme: typeof MenphysModule.config.theme) {

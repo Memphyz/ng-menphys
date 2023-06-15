@@ -4,7 +4,13 @@ import { MainComponent } from './main/main.component';
 import { MenphysModule } from 'menphys';
 import { RouterModule } from '@angular/router';
 import { DocumentationComponent } from './documentation/documentation.component';
-import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { HighlightModule, HIGHLIGHT_OPTIONS, HighlightLoader } from 'ngx-highlightjs';
+
+const THEMES = {
+  light: 'assets/styles/atom-one-light.css',
+  dark: 'assets/styles/atom-one-dark.css'
+}
 
 @NgModule({
   declarations: [
@@ -28,14 +34,20 @@ import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
       provide: HIGHLIGHT_OPTIONS,
       useValue: {
         coreLibraryLoader: () => import('highlight.js/lib/core'),
+        lineNumbersLoader: () => import('highlightjs-line-numbers.js'),
         lineNumbers: true,
+        themePath: 'assets/styles/atom-one-dark.css',
         languages: {
           typescript: () => import('highlight.js/lib/languages/typescript'),
-          css: () => import('highlight.js/lib/languages/css'),
+          scss: () => import('highlight.js/lib/languages/scss'),
           xml: () => import('highlight.js/lib/languages/xml')
         }
       }
     }
   ],
 })
-export class SharedModule { }
+export class SharedModule {
+  constructor (private readonly hljsLoader: HighlightLoader) {
+    MenphysModule.onThemeChange = (theme) => this.hljsLoader.setTheme(THEMES[ theme ])
+  }
+}

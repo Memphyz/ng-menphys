@@ -1,10 +1,38 @@
-<article class="content">
-  <h3>{{documentation.title}}</h3>
-  <span class="desc">{{documentation.description}}</span>
-  <ng-container *ngIf="documentation.example">
-    <pre>
-      <code [highlight]="documentation.example.code" [lineNumbers]="true" [languages]="['xml', 'typescript', 'css']"></code>
-    </pre>
+<ng-container *ngTemplateOutlet="contentRef; context: {$implicit: documentation}" />
+<ng-template
+  #contentRef
+  let-doc
+>
+  <section class="content">
+    <h3 [innerHTML]="doc.title"></h3>
+    <span
+      class="desc"
+      [innerHTML]="doc.description"
+    ></span>
+    <ng-container *ngIf="doc.example">
+      <pre>
+        <code
+          [highlight]="doc.example.code"
+          [lineNumbers]="true"
+          [languages]="['xml', 'typescript', 'css']"
+        ></code>
+        </pre>
+        <div
+          *ngIf="doc.example.warning"
+          class="warning"
+        >
+          <span [innerHTML]="doc.example.warning"></span>
+        </div>
+        <div
+          class="component"
+          *ngIf="doc.example.component as component"
+        >
+          <ng-container [ngComponentOutlet]="component"></ng-container>
+        </div>
+        </ng-container>
+        </section>
+        <ng-container *ngFor="let child of doc.children">
+          <ng-container *ngTemplateOutlet="contentRef; context: {$implicit: child}" />
   </ng-container>
 
-</article>
+  </ng-template>

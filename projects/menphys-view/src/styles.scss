@@ -2,3 +2,13 @@ html,
 body {
   overflow: hidden;
 }
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.hljs-ln-n:before {
+  margin-right: 15px;
+}
