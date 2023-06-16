@@ -1,8 +1,11 @@
-<div class="input-container">
+<div
+  class="input-container"
+  [class.required]="required"
+>
   <label
-    *ngIf="name"
-    [for]="name"
-  >{{name}}</label>
+    *ngIf="label"
+    [for]="label"
+  >{{label}}</label>
   <ng-container *ngTemplateOutlet="inputsRef"></ng-container>
 </div>
 
@@ -10,7 +13,7 @@
   <ng-container [ngSwitch]="type">
     <ng-container *ngSwitchCase="types.search">
       <menphys-input-search
-        [righticon]="righticon"
+        [righticon]="righticon || {name: 'search', size: 30}"
         [lefticon]="lefticon"
         [accept]="accept"
         [autocomplete]="autocomplete"
@@ -30,12 +33,19 @@
         [placeholder]="placeholder"
       />
     </ng-container>
+    <ng-container *ngSwitchCase="types.checkbox">
+      <div class="check">
+        <menphys-checkbox
+          [label]="label"
+          [required]="required"
+        />
+      </div>
+    </ng-container>
     <ng-container *ngSwitchDefault>
       <ng-container *ngTemplateOutlet="inputRef"></ng-container>
     </ng-container>
   </ng-container>
 </ng-template>
-
 <ng-template #inputRef>
   <div
     class="input-wrapper"

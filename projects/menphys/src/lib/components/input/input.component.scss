@@ -4,6 +4,10 @@
   flex-direction: column;
   justify-content: center;
 
+  &.search>.input-container>.input-wrapper>input:not(:focus)::placeholder {
+    color: transparent;
+  }
+
   &.input-right-icon {
     .input-wrapper {
       span {
@@ -16,6 +20,8 @@
         &:not(:focus) {
           padding-left: calc(var(--right-icon-size) + 5px);
           border-radius: calc(var(--right-icon-size) * 2);
+          min-width: 40px;
+          min-height: 40px;
         }
 
         &:focus {
@@ -23,6 +29,17 @@
           border-radius: 4px;
         }
       }
+    }
+  }
+
+  .required>label {
+    position: relative;
+
+    &::after {
+      content: '*';
+      position: relative;
+      left: 5px;
+      color: var(--danger-5);
     }
   }
 
@@ -54,7 +71,7 @@
       padding: 5px 10px;
       background-color: rgba(139, 139, 139, 0.09);
 
-      &:focus {
+      &:not([type="range"]) :not([type="checkbox"]) :focus {
         ~span {
           left: 0%;
           width: 100%;

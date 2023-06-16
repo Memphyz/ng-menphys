@@ -8,6 +8,7 @@ import { SharedModule } from '@menphys/shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { InputSearchComponent } from './input/input-search/input-search.component';
+import { CheckboxComponent } from './input/checkbox/checkbox.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { InputSearchComponent } from './input/input-search/input-search.componen
     SidenavComponent,
     IconComponent,
     HeaderComponent,
-    InputSearchComponent
+    InputSearchComponent,
+    CheckboxComponent
   ],
   imports: [
     CommonModule,

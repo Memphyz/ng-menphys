@@ -1,0 +1,29 @@
+.checkbox {
+  width: 35px;
+  height: 35px;
+  border: 2px solid var(--brand-color-1);
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    mask-image: url(./../../../../assets/icons/check.svg);
+    mask-size: contain;
+    mask-position: center;
+    background-color: var(--success-3);
+    transition: all 0.5s;
+    top: 50%;
+    left: 50%;
+  }
+
+  &.checked::before {
+    top: 10%;
+    left: 10%;
+    width: 25px;
+    height: 25px;
+  }
+}

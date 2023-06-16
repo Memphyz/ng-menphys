@@ -12,11 +12,6 @@ export class InputSearchComponent extends InputProperties {
   constructor () {
     super();
     this.animationRightIcon === undefined && (this.animationRightIcon = true);
-    this.righticon ||= new Icon({
-      name: 'search',
-      color: 'var(--text-color)',
-      size: 18
-    })
   }
 
 }

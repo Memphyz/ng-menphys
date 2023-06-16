@@ -21,5 +21,8 @@ export * from '@menphys/models/sidenav/sidenav-item';
 export * from '@menphys/models/sidenav/sidenav-group-item';
 export * from '@menphys/models/icon/icon';
 
+// DECORATORS
+export * from '@menphys/shared/decorators/noop.decorator';
+
 // DIRECTIVES
 export * from '@menphys/directives/directives.module';
