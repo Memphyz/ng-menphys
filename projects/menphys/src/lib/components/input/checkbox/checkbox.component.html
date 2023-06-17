@@ -1,6 +1,17 @@
+<input
+  type="checkbox"
+  hidden
+  [disabled]="disabled"
+  [(ngModel)]="value"
+  #checkRef
+>
 <div
   class="checkbox"
   [class.checked]="value"
-  (click)="btnToggle()"
+  (click)="checkRef.click()"
 ></div>
-<label for="{{label}}">{{label}}</label>
+<label
+  (click)="checkRef.click()"
+  [class.required]="required"
+  for="{{label}}"
+>{{label}}</label>

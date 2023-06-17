@@ -4,6 +4,7 @@ import { ThemeChangerViewComponent } from './theme-changer-view/theme-changer-vi
 import { SharedModule } from '../../shared/shared.module';
 import { ComponentsRoutingModule } from './components-routing.module';
 import { InputsViewComponent } from './inputs-view/inputs-view.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -12,6 +13,8 @@ import { InputsViewComponent } from './inputs-view/inputs-view.component';
   imports: [
     CommonModule,
     SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
     ComponentsRoutingModule
   ]
 })

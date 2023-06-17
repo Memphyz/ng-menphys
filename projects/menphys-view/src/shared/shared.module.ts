@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { DocumentationComponent } from './documentation/documentation.component';
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { HighlightModule, HIGHLIGHT_OPTIONS, HighlightLoader } from 'ngx-highlightjs';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const THEMES = {
   light: 'assets/styles/atom-one-light.css',
@@ -21,12 +22,14 @@ const THEMES = {
     MainComponent,
     MenphysModule,
     DocumentationComponent,
-    HighlightModule
+    HighlightModule,
   ],
   imports: [
     CommonModule,
     HighlightModule,
     RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
     MenphysModule.forRoot({ theme: 'dark' })
   ],
   providers: [

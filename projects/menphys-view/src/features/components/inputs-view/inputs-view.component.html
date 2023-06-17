@@ -1,7 +1,11 @@
-<menphys-input
-  label="Text"
-  placeholder="Text placeholder"
-  type="checkbox"
-  [required]="true"
-  [maxlength]="120"
-/>
+<form [formGroup]="form">
+
+  <menphys-input label="Text"
+    formControlName="control"
+    placeholder="Text placeholder"
+    type="search"
+    [required]="true"
+    [maxlength]="120"
+  />
+  {{form.get('control').value}}
+  </form>

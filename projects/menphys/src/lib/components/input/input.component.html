@@ -1,9 +1,10 @@
 <div
   class="input-container"
   [class.required]="required"
+  [class.disabled]="disabled"
 >
   <label
-    *ngIf="label"
+    *ngIf="label && shouldShowLabel"
     [for]="label"
   >{{label}}</label>
   <ng-container *ngTemplateOutlet="inputsRef"></ng-container>
@@ -16,11 +17,11 @@
         [righticon]="righticon || {name: 'search', size: 30}"
         [lefticon]="lefticon"
         [accept]="accept"
+        [formControl]="control"
         [autocomplete]="autocomplete"
         [autocorrect]="autocorrect"
         [autofocus]="autofocus"
         [checked]="checked"
-        [disabled]="disabled"
         [incremental]="incremental"
         [max]="max"
         [maxlength]="maxlength"
@@ -31,6 +32,14 @@
         [pattern]="pattern"
         [type]="type === 'search' ? types.text : type"
         [placeholder]="placeholder"
+        (onBlur)="onBlur.emit($event)"
+        (onClick)="onClick.emit($event)"
+        (onCopy)="onCopy.emit($event)"
+        (onCut)="onCut.emit($event)"
+        (onFocus)="onFocus.emit($event)"
+        (onKeyDown)="onKeyDown.emit($event)"
+        (onKeyUp)="onKeyUp.emit($event)"
+        (onPaste)="onPaste.emit($event)"
       />
     </ng-container>
     <ng-container *ngSwitchCase="types.checkbox">
@@ -73,9 +82,18 @@
       [attr.minlength]="minlength"
       [multiple]="multiple"
       [name]="name"
+      [(ngModel)]="value"
       [pattern]="pattern"
       [type]="type"
       [placeholder]="placeholder"
+      (blur)="onBlur.emit($event)"
+      (click)="onClick.emit($event)"
+      (copy)="onCopy.emit($event)"
+      (cut)="onCut.emit($event)"
+      (focus)="onFocus.emit($event)"
+      (keydown)="onKeyDown.emit($event)"
+      (keyup)="onKeyUp.emit($event)"
+      (paste)="onPaste.emit($event)"
     />
     <span></span>
   </div>

@@ -1,0 +1,10 @@
+label.required {
+  position: relative;
+
+  &::after {
+    content: '*';
+    position: relative;
+    left: 5px;
+    color: var(--danger-5);
+  }
+}

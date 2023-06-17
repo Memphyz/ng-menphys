@@ -7,6 +7,7 @@ import { AbstractsModule } from './abstracts/abstracts.module';
 import { SharedModule } from './shared/shared.module';
 import * as dark from './shared/themes/dark.json';
 import * as light from './shared/themes/light.json';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 interface ModuleConfig {
   theme: 'dark' | 'light';
@@ -18,13 +19,17 @@ interface ModuleConfig {
     ComponentsModule,
     DirectivesModule,
     AbstractsModule,
+    FormsModule,
+    ReactiveFormsModule,
     SharedModule
   ],
   exports: [
     ComponentsModule,
     DirectivesModule,
     AbstractsModule,
-    SharedModule
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class MenphysModule {

@@ -1,11 +1,12 @@
-import { Component, HostBinding, Input } from "@angular/core";
+import { Component, EventEmitter, HostBinding, Input, Output } from "@angular/core";
 import { InputType } from "@menphys/interfaces/types/input-type";
 import { Icon } from "@menphys/models/icon/icon";
+import { CommonControlValueAcessorMethods } from "@menphys/shared/reactive-forms/control-value-acessor-methods";
 
 @Component({
   template: ''
 })
-export class InputProperties {
+export class InputProperties<V> extends CommonControlValueAcessorMethods<V> {
   /**
    * Returns the content type of the object.
    *
@@ -60,15 +61,6 @@ export class InputProperties {
    * @memberof InputComponent
    */
   @Input() public checked: boolean;
-
-  /**
-   * A Boolean attribute which, if present, indicates that the user should not be able to interact with the input. Disabled inputs are typically rendered with a dimmer color or using some other form of indication that the field is not available for use.
-   *
-   *
-   * @type {boolean}
-   * @memberof InputComponent
-   */
-  @Input() public disabled: boolean;
 
   /**
    * WebKit and Blink extension (so supported by Safari, Opera, Chrome, etc.) which, if present, tells the user agent to process the input as a live search. As the user edits the value of the field, the user agent sends search events to the HTMLInputElement object representing the search box. This allows your code to update the search results in real time as the user edits the search.
@@ -238,6 +230,98 @@ export class InputProperties {
   @Input() public righticon: string | Icon;
 
   /**
+   * The blur event fires when an element has lost focus. The event does not bubble, but  the related focusout event that follows does bubble.
+
+    An element will lose focus if another element is selected. An element will also lose focus if a style that does not allow focus is applied, such as hidden, or if the element is removed from the document — in both of these cases focus moves to the body element (viewport). Note however that blur is not fired when a focused element is removed from the document.
+   *
+   * @memberof InputProperties
+   */
+  @Output() public onBlur = new EventEmitter<FocusEvent>();
+
+  /**
+   * An element receives a click event when a pointing device button (such as a mouse's primary mouse button) is both pressed and released while the pointer is located inside the element.
+
+    If the button is pressed on one element and the pointer is moved outside the element before the button is released, the event is fired on the most specific ancestor element that contained both elements.
+   *
+   * @memberof InputProperties
+   */
+  @Output() public onClick = new EventEmitter<MouseEvent>();
+
+  /**
+   * The copy event fires when the user initiates a copy action through the browser's user interface.
+
+    The event's default action is to copy the selection (if any) to the clipboard.
+
+    A handler for this event can modify the clipboard contents by calling setData(format, data) on the event's ClipboardEvent.clipboardData property, and cancelling the event's default action using event.preventDefault().
+   *
+   * @memberof InputProperties
+   */
+  @Output() public onCopy = new EventEmitter<ClipboardEvent>();
+
+  /**
+   * The cut event is fired when the user has initiated a "cut" action through the browser's user interface.
+
+    If the user attempts a cut action on uneditable content, the cut event still fires but the event object contains no data.
+
+    The event's default action is to copy the current selection (if any) to the system clipboard and remove it from the document.
+
+    A handler for this event can modify the clipboard contents by calling setData(format, data) on the event's ClipboardEvent.clipboardData property, and cancelling the default action using event.preventDefault().
+
+    Note though that cancelling the default action will also prevent the document from being updated. So an event handler which wants to emulate the default action for "cut" while modifying the clipboard must also manually remove the selection from the document.
+   *
+   * @memberof InputProperties
+   */
+  @Output() public onCut = new EventEmitter<ClipboardEvent>();
+
+  /**
+   * The focus event fires when an element has received focus. The event does not bubble, but the related focusin event that follows does bubble.
+
+  The opposite of focus is the blur event, which fires when the element has lost focus.
+
+  The focus event is not cancelable.
+   *
+   * @memberof InputProperties
+   */
+  @Output() public onFocus = new EventEmitter<FocusEvent>();
+
+  /**
+   * The keydown event is fired when a key is pressed.
+
+    Unlike the deprecated keypress event, the keydown event is fired for all keys, regardless of whether they produce a character value.
+
+    The keydown and keyup events provide a code indicating which key is pressed, while keypress indicates which character was entered. For example, a lowercase "a" will be reported as 65 by keydown and keyup, but as 97 by keypress. An uppercase "A" is reported as 65 by all events.
+
+    Keyboard events are only generated by <input>, <textarea>, <summary> and anything with the contentEditable or tabindex attribute. If not caught, they bubble up the DOM tree until they reach Document.
+   *
+   * @memberof InputProperties
+   */
+  @Output() public onKeyDown = new EventEmitter<KeyboardEvent>();
+
+  /**
+   * The keyup event is fired when a key is released.
+
+    The keydown and keyup events provide a code indicating which key is pressed, while keypress indicates which character was entered. For example, a lowercase "a" will be reported as 65 by keydown and keyup, but as 97 by keypress. An uppercase "A" is reported as 65 by all events.
+
+    Keyboard events are only generated by <input>, <textarea>, <summary> and anything with the contentEditable or tabindex attribute.
+   *
+   * @memberof InputProperties
+   */
+  @Output() public onKeyUp = new EventEmitter<KeyboardEvent>();
+
+  /**
+   * The paste event is fired when the user has initiated a "paste" action through the browser's user interface.
+
+    If the cursor is in an editable context (for example, in a <textarea> or an element with contenteditable attribute set to true) then the default action is to insert the contents of the clipboard into the document at the cursor position.
+
+    A handler for this event can access the clipboard contents by calling getData() on the event's clipboardData property.
+
+    To override the default behavior (for example to insert some different data or a transformation of the clipboard contents) an event handler must cancel the default action using event.preventDefault(), and then insert its desired data manually.
+   *
+   * @memberof InputProperties
+   */
+  @Output() public onPaste = new EventEmitter<ClipboardEvent>();
+
+  /**
    * Return a righticon in object format, converted if the input parameter was a string
    *
    * @readonly
@@ -260,6 +344,7 @@ export class InputProperties {
   }
 
   constructor () {
+    super();
     if (this.lefticon && typeof this.lefticon === 'string') {
       this.lefticon = new Icon({
         name: this.lefticon,

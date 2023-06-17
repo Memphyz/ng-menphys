@@ -1,5 +1,5 @@
 import { Input } from "@angular/core";
-import { Noop } from "menphys";
+import { Noop } from "../decorators/noop.decorator";
 
 @Noop()
 export abstract class CommonControlValueAcessorMethods<V> {
@@ -19,6 +19,9 @@ export abstract class CommonControlValueAcessorMethods<V> {
   protected _value: V;
 
   public set value(newValue: V) {
+    if (this.disabled) {
+      return;
+    }
     this._value = newValue;
     this.writeValue(newValue)
   }

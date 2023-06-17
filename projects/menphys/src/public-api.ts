@@ -10,11 +10,13 @@ export * from '@menphys/abstracts/abstracts.module';
 
 // COMPONENTS
 export * from '@menphys/components/components.module';
-export * from '@menphys/components/input/input.component';
+export * from '@menphys/components/header/header.component';
 export * from '@menphys/components/icon/icon.component';
+export * from '@menphys/components/input/checkbox/checkbox.component';
+export * from '@menphys/components/input/input-search/input-search.component';
+export * from '@menphys/components/input/input.component';
 export * from '@menphys/components/sidenav/sidenav.component';
 export * from '@menphys/components/theme-changer/theme-changer.component';
-export * from '@menphys/components/header/header.component';
 
 // MODELS
 export * from '@menphys/models/sidenav/sidenav-item';

@@ -1,9 +1,10 @@
-import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared/shared.module';
-import { FeaturesRoutingModule } from './features-routing.module';
-import { FeatureComponent } from './feature.component';
-import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { SharedModule } from '../shared/shared.module';
+import { FeatureComponent } from './feature.component';
+import { FeaturesRoutingModule } from './features-routing.module';
 import { HomeComponent } from './home/home.component';
 import { IconsViewComponent } from './icons-view/icons-view.component';
 
@@ -15,6 +16,8 @@ import { IconsViewComponent } from './icons-view/icons-view.component';
     BrowserModule,
     HttpClientModule,
     SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
     FeaturesRoutingModule
   ],
   bootstrap: [ FeatureComponent ]

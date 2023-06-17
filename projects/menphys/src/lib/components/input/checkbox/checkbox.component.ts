@@ -1,11 +1,15 @@
 import { Component, Input } from '@angular/core';
 import { type ControlValueAccessor } from '@angular/forms';
 import { CommonControlValueAcessorMethods } from '@menphys/shared/reactive-forms/control-value-acessor-methods';
+import { FormUtils } from '@menphys/shared/utils/form.utils';
 
 @Component({
   selector: 'menphys-checkbox',
   templateUrl: './checkbox.component.html',
-  styleUrls: [ './checkbox.component.scss' ]
+  styleUrls: [ './checkbox.component.scss' ],
+  providers: [
+    FormUtils.reactiveProvider(CheckboxComponent)
+  ]
 })
 export class CheckboxComponent extends CommonControlValueAcessorMethods<boolean> implements ControlValueAccessor {
 

@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { InputSearchComponent } from './input/input-search/input-search.component';
 import { CheckboxComponent } from './input/checkbox/checkbox.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,8 @@ import { CheckboxComponent } from './input/checkbox/checkbox.component';
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule,
     SharedModule
   ],
@@ -30,7 +33,11 @@ import { CheckboxComponent } from './input/checkbox/checkbox.component';
     ThemeChangerComponent,
     SidenavComponent,
     IconComponent,
-    HeaderComponent
+    HeaderComponent,
+    InputSearchComponent,
+    CheckboxComponent,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class ComponentsModule { }

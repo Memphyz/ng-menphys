@@ -4,11 +4,22 @@
   flex-direction: column;
   justify-content: center;
 
+
   &.search>.input-container>.input-wrapper>input:not(:focus)::placeholder {
     color: transparent;
   }
 
   &.input-right-icon {
+    .input-container.disabled>.input-wrapper {
+      menphys-icon {
+        background-color: var(--disabled-4);
+      }
+
+      input::placeholder {
+        color: var(--disabled-4);
+      }
+    }
+
     .input-wrapper {
       span {
         display: none;
@@ -17,13 +28,14 @@
       input {
         width: 0%;
 
-        &:not(:focus) {
+        &:not(:disabled):not(:focus) {
           padding-left: calc(var(--right-icon-size) + 5px);
           border-radius: calc(var(--right-icon-size) * 2);
           min-width: 40px;
           min-height: 40px;
         }
 
+        &:disabled,
         &:focus {
           width: 100%;
           border-radius: 4px;
@@ -32,14 +44,29 @@
     }
   }
 
-  .required>label {
-    position: relative;
+  .input-container {
 
-    &::after {
-      content: '*';
+    &.disabled {
+      label {
+        color: var(--disabled-3);
+      }
+
+      .input-wrapper {
+        menphys-icon {
+          pointer-events: none;
+        }
+      }
+    }
+
+    &.required>label {
       position: relative;
-      left: 5px;
-      color: var(--danger-5);
+
+      &::after {
+        content: '*';
+        position: relative;
+        left: 5px;
+        color: var(--danger-5);
+      }
     }
   }
 
@@ -70,6 +97,11 @@
       border-radius: 4px;
       padding: 5px 10px;
       background-color: rgba(139, 139, 139, 0.09);
+
+      &:disabled {
+        background-color: var(--disabled-3);
+        pointer-events: none;
+      }
 
       &:not([type="range"]) :not([type="checkbox"]) :focus {
         ~span {
