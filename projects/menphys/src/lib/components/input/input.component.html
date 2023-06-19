@@ -42,6 +42,9 @@
         (onPaste)="onPaste.emit($event)"
       />
     </ng-container>
+    <ng-container *ngSwitchCase="types.button">
+      <menphys-button class="outline">{{label}}</menphys-button>
+    </ng-container>
     <ng-container *ngSwitchCase="types.checkbox">
       <div class="check">
         <menphys-checkbox

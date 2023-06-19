@@ -18,8 +18,6 @@ export enum InputType {
   radio = 'radio',
   name = 'name',
   range = 'range',
-  min = 'min',
-  max = 'max',
   reset = 'reset',
   search = 'search',
   submit = 'submit',

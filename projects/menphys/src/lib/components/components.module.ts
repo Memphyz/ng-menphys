@@ -10,6 +10,7 @@ import { HeaderComponent } from './header/header.component';
 import { InputSearchComponent } from './input/input-search/input-search.component';
 import { CheckboxComponent } from './input/checkbox/checkbox.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ButtonComponent } from './button/button.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     IconComponent,
     HeaderComponent,
     InputSearchComponent,
-    CheckboxComponent
+    CheckboxComponent,
+    ButtonComponent
   ],
   imports: [
     CommonModule,

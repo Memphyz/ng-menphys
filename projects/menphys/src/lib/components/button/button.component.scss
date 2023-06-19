@@ -1,0 +1,16 @@
+:host {
+  background-color: var(--brand-color-2);
+  color: var(--text-color);
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(0.8);
+  }
+
+  &.outline {
+    background-color: transparent;
+    border: 1px solid var(--brand-color-2);
+  }
+}

@@ -5,7 +5,8 @@ import { InputType } from '@menphys/interfaces/types/input-type';
 import { InputProperties } from '@menphys/shared/input/input-properties';
 
 const HIDE_LABEL = [
-  InputType.checkbox
+  InputType.checkbox,
+  InputType.button
 ]
 
 @Component({
