@@ -1,0 +1,28 @@
+<table>
+  <thead>
+    <th
+      class="weekday"
+      [style.width.%]="100 / (weeks.length)"
+      *ngFor="let weekday of weeks"
+    >
+      {{weekday}}
+    </th>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let week of weeks; let i = index; trackBy: trackByFn">
+      <ng-container *ngIf="getWeekdays(i) as weekdays">
+        <tr *ngIf="weekdays.length">
+          <td
+            *ngFor="let weekday of weekdays; trackBy: trackByFn"
+            [class.disabled]="weekday.disabled"
+            (click)="weekday && handleSelect(weekday.day)"
+          >
+            {{weekday.day || ''}}
+          </td>
+        </tr>
+      </ng-container>
+    </ng-container>
+
+  </tbody>
+
+</table>

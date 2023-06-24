@@ -30,7 +30,7 @@ const THEMES = {
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    MenphysModule.forRoot({ theme: 'dark' })
+    MenphysModule.forRoot({ theme: 'dark', locale: 'pt-BR' })
   ],
   providers: [
     {

@@ -1,4 +1,4 @@
-import { Component, Optional, Self } from '@angular/core';
+import { AfterContentChecked, Component, Optional, Self } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { FormControl, NgControl } from '@angular/forms';
 import { InputType } from '@menphys/interfaces/types/input-type';
@@ -6,7 +6,7 @@ import { InputProperties } from '@menphys/shared/input/input-properties';
 
 const HIDE_LABEL = [
   InputType.checkbox,
-  InputType.button
+  InputType.date,
 ]
 
 @Component({
@@ -14,7 +14,7 @@ const HIDE_LABEL = [
   templateUrl: './input.component.html',
   styleUrls: [ './input.component.scss' ],
 })
-export class InputComponent<V> extends InputProperties<V> {
+export class InputComponent<V> extends InputProperties<V>  {
 
   constructor (@Optional() @Self() private readonly ngControl: NgControl) {
     super();

@@ -22,6 +22,7 @@
     "@angular/platform-browser": "^16.0.0",
     "@angular/platform-browser-dynamic": "^16.0.0",
     "@angular/router": "^16.0.0",
+    "@ngneat/until-destroy": "^10.0.0-beta.0",
     "husky": "^8.0.3",
     "menphys": "file:dist/menphys",
     "ngx-highlightjs": "^9.0.0",

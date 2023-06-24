@@ -10,7 +10,10 @@ import { HeaderComponent } from './header/header.component';
 import { InputSearchComponent } from './input/input-search/input-search.component';
 import { CheckboxComponent } from './input/checkbox/checkbox.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ButtonComponent } from './button/button.component';
+import { DateComponent } from './date/date/date.component';
+import { MonthYearComponent } from './date/month-year/month-year.component';
+import { TimeComponent } from './date/time/time.component';
+import { CalendarComponent } from './date/calendar/calendar.component';
 
 @NgModule({
   declarations: [
@@ -21,14 +24,18 @@ import { ButtonComponent } from './button/button.component';
     HeaderComponent,
     InputSearchComponent,
     CheckboxComponent,
-    ButtonComponent
+    DateComponent,
+    MonthYearComponent,
+    TimeComponent,
+    CalendarComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    SharedModule
+    SharedModule,
+
   ],
   exports: [
     InputComponent,
@@ -39,7 +46,10 @@ import { ButtonComponent } from './button/button.component';
     InputSearchComponent,
     CheckboxComponent,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DateComponent,
+    MonthYearComponent,
+    TimeComponent,
   ]
 })
 export class ComponentsModule { }

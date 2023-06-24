@@ -9,8 +9,9 @@ import * as dark from './shared/themes/dark.json';
 import * as light from './shared/themes/light.json';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-interface ModuleConfig {
+export interface ModuleConfig {
   theme: 'dark' | 'light';
+  locale?: string;
 }
 
 @NgModule({
@@ -35,16 +36,20 @@ interface ModuleConfig {
 export class MenphysModule {
 
   public static config: ModuleConfig = {
-    theme: 'dark'
+    theme: 'dark',
+    locale: navigator.language
   };
 
   public static onThemeChange: (theme: 'dark' | 'light') => void;
 
   public static forRoot(config?: ModuleConfig): ModuleWithProviders<MenphysModule> {
-    MenphysModule.config = config;
+    MenphysModule.config = { ...MenphysModule.config, ...(config || {}) };
     return {
       ngModule: MenphysModule,
-      providers: []
+      providers: [ {
+        provide: 'config',
+        useValue: MenphysModule.config
+      } ]
     };
   }
 

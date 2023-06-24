@@ -17,6 +17,9 @@ export * from '@menphys/components/input/input-search/input-search.component';
 export * from '@menphys/components/input/input.component';
 export * from '@menphys/components/sidenav/sidenav.component';
 export * from '@menphys/components/theme-changer/theme-changer.component';
+export * from '@menphys/components/date/date/date.component';
+export * from '@menphys/components/date/month-year/month-year.component';
+export * from '@menphys/components/date/time/time.component';
 
 // MODELS
 export * from '@menphys/models/sidenav/sidenav-item';

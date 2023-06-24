@@ -42,9 +42,6 @@
         (onPaste)="onPaste.emit($event)"
       />
     </ng-container>
-    <ng-container *ngSwitchCase="types.button">
-      <menphys-button class="outline">{{label}}</menphys-button>
-    </ng-container>
     <ng-container *ngSwitchCase="types.checkbox">
       <div class="check">
         <menphys-checkbox
@@ -52,6 +49,36 @@
           [required]="required"
         />
       </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="types.date">
+      <menphys-date
+        [righticon]="righticon"
+        [lefticon]="lefticon"
+        [accept]="accept"
+        [formControl]="control"
+        [autocomplete]="autocomplete"
+        [autocorrect]="autocorrect"
+        [autofocus]="autofocus"
+        [checked]="checked"
+        [incremental]="incremental"
+        [max]="max"
+        [maxlength]="maxlength"
+        [min]="min"
+        [attr.minlength]="minlength"
+        [multiple]="multiple"
+        [name]="name"
+        [pattern]="pattern"
+        [type]="type"
+        [placeholder]="placeholder"
+        (onBlur)="onBlur.emit($event)"
+        (onClick)="onClick.emit($event)"
+        (onCopy)="onCopy.emit($event)"
+        (onCut)="onCut.emit($event)"
+        (onFocus)="onFocus.emit($event)"
+        (onKeyDown)="onKeyDown.emit($event)"
+        (onKeyUp)="onKeyUp.emit($event)"
+        (onPaste)="onPaste.emit($event)"
+      />
     </ng-container>
     <ng-container *ngSwitchDefault>
       <ng-container *ngTemplateOutlet="inputRef"></ng-container>
