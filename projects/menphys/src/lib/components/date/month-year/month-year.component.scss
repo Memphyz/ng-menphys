@@ -1,0 +1,134 @@
+:host {
+  .content-month-year-wrapper {
+    span {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 10px;
+
+      .content-selector {
+        cursor: pointer;
+        border-radius: 1000px;
+        padding: 0px 10px;
+        margin: 5px 0px;
+        display: flex;
+        gap: 5px;
+        font-weight: 600;
+        align-items: center;
+
+        &:hover {
+          background-color: var(--brand-color-6);
+        }
+
+        .content-data {
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          top: 0;
+          left: 0;
+          z-index: 1;
+          border-radius: 6px;
+          transition: all 0.5s;
+          animation: create-animation 0.5s;
+          max-height: 0px;
+          overflow: hidden;
+          background-color: var(--brand-color-5);
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          cursor: default;
+
+          &.month {
+            display: grid;
+            grid-template-columns: auto auto;
+            align-items: center;
+            justify-content: center;
+            padding: 5px 10px;
+            width: 100%;
+            overflow: auto;
+
+            .content-view {
+              text-align: center;
+              align-items: center;
+              justify-content: center;
+            }
+          }
+
+          &.year>.data {
+            max-height: 195px;
+            overflow: hidden;
+          }
+
+          .data {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 5px;
+
+            .content-view {
+              border-radius: 1000px;
+              cursor: pointer;
+
+              &.active {
+                background-color: var(--brand-color-2);
+                opacity: 0.5;
+                pointer-events: none;
+              }
+
+              &:hover {
+                background-color: var(--brand-color-2);
+              }
+            }
+          }
+
+          .selector {
+            width: 100%;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+
+            &:hover::before {
+              filter: brightness(1.3);
+            }
+
+            &::before {
+              content: '';
+              position: relative;
+              width: 20px;
+              height: 20px;
+              mask-size: contain;
+              mask-position: center;
+              mask-repeat: no-repeat;
+              background-color: var(--brand-color-1);
+            }
+
+            &.content-header::before {
+              mask-image: url(./../../../../assets/icons/chevron_up.svg);
+            }
+
+            &.content-footer::before {
+              mask-image: url(./../../../../assets/icons/chevron_down.svg);
+            }
+          }
+
+
+
+          &.animation {
+            max-height: 500px;
+          }
+
+          @keyframes create-animation {
+            from {
+              max-height: 0px;
+            }
+
+            to {
+              max-height: 500px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

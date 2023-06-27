@@ -1,1 +1,83 @@
-<p>month-year works!</p>
+<div class="content-month-year-wrapper">
+  <span>
+    <input
+      #inputYearRef
+      hidden
+      type="checkbox"
+    />
+    <input
+      #inputYearAnimationRef
+      hidden
+      type="checkbox"
+    />
+    <div
+      class="content-selector"
+      (click)="inputYearAnimationRef.click(); handleAnimation(inputYearRef)"
+    >
+      {{currentYear}}
+      <ng-container *ngIf="inputYearRef.checked">
+        <ng-container
+          *ngTemplateOutlet="loadDataRef; context: {animation: inputYearAnimationRef.checked, type: 'year'}" />
+      </ng-container>
+    </div>
+    <input
+      #inputMonthRef
+      hidden
+      type="checkbox"
+    />
+    <input
+      #inputMonthAnimationRef
+      hidden
+      type="checkbox"
+    />
+    <div
+      class="content-selector"
+      (click)="inputMonthAnimationRef.click(); handleAnimation(inputMonthRef)"
+    >
+      {{currentMonth}}
+      <ng-container *ngIf="inputMonthRef.checked">
+        <ng-container
+          *ngTemplateOutlet="loadDataRef; context: {animation: inputMonthAnimationRef.checked, type: 'month'}"
+        />
+      </ng-container>
+    </div>
+  </span>
+</div>
+
+<ng-template
+  #loadDataRef
+  let-animation="animation"
+  let-type="type"
+>
+  <div
+    class="content-data {{type}}"
+    [class.animation]="animation"
+  >
+    <ng-container *ngIf="getContent(type) as data">
+      <div
+        class="selector content-header"
+        *ngIf="type === 'year'"
+        (click)="handleLoadYears('top', data, $event)"
+      ></div>
+      <div
+        class="data"
+        #dataRef
+      >
+        <ng-container *ngFor="let content of data; trackBy: trackByFn; let i = index">
+          <span
+            class="content-view"
+            [class.active]="type === 'year' ? content === currentYear : content === currentMonth"
+            (click)="handleUpdate(type, type === 'year' ? content : i)"
+          >{{content}}</span>
+        </ng-container>
+      </div>
+      <div
+        class="selector content-footer"
+        *ngIf="type === 'year'"
+        (click)="handleLoadYears('bottom', data, $event)"
+      ></div>
+    </ng-container>
+
+  </div>
+</ng-template>
+

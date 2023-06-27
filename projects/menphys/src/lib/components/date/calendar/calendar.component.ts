@@ -47,7 +47,7 @@ export class CalendarComponent implements OnInit {
       }
     })
       .slice(start, ghostQuantity ? end - 1 : end);
-    if (days.at(days.length - 1)?.day > 26 && days.length < weeks) {
+    if (days.at(days.length - 1)?.day > 27 && days.length < weeks) {
       const diff = weeks - days.length;
       later.push(...this.getFirstDaysLaterMonth().splice(0, diff))
     }
