@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { ModuleConfig } from '@menphys/menphys.module';
 
-const DATA_LENGTH = 10
+const DATA_LENGTH = 2
 
 @Component({
   selector: 'menphys-month-year',
@@ -33,6 +33,7 @@ export class MonthYearComponent {
   }
 
   public handleAnimation(input: HTMLInputElement, ms = 500): void {
+    console.trace('entrou')
     if (input.checked) {
       setTimeout(() => input.click(), ms)
       return undefined;
@@ -81,7 +82,7 @@ export class MonthYearComponent {
 
   private getMonths(): string[] {
     return Array(12).fill(0).map((_value, index) => this.formatMonth(Intl.DateTimeFormat(this.config.locale, {
-      month: 'long'
+      month: 'short'
     }).format(new Date(this.currentYear, index, 1))))
   }
 

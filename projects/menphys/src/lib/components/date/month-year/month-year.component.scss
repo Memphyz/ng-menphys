@@ -5,6 +5,20 @@
       justify-content: space-between;
       padding: 5px 10px;
 
+      .months-changer {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+
+        menphys-icon {
+          cursor: pointer;
+
+          &:hover {
+            background-color: var(--disabled-2);
+          }
+        }
+      }
+
       .content-selector {
         cursor: pointer;
         border-radius: 1000px;
@@ -18,6 +32,8 @@
         &:hover {
           background-color: var(--brand-color-6);
         }
+
+
 
         .content-data {
           position: absolute;
@@ -37,47 +53,57 @@
           justify-content: space-between;
           cursor: default;
 
-          &.month {
-            display: grid;
-            grid-template-columns: auto auto;
-            align-items: center;
-            justify-content: center;
-            padding: 5px 10px;
-            width: 100%;
-            overflow: auto;
-
-            .content-view {
-              text-align: center;
-              align-items: center;
-              justify-content: center;
-            }
-          }
-
-          &.year>.data {
-            max-height: 195px;
-            overflow: hidden;
-          }
-
           .data {
             display: flex;
-            flex-wrap: wrap;
             align-items: center;
+            flex-direction: column;
+            max-height: 195px;
+            overflow: auto;
             gap: 5px;
 
-            .content-view {
-              border-radius: 1000px;
-              cursor: pointer;
+            .year-data {
+              .months {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 80%;
+                margin: auto;
 
-              &.active {
-                background-color: var(--brand-color-2);
-                opacity: 0.5;
-                pointer-events: none;
+                span {
+                  border-radius: 15px;
+                  cursor: pointer;
+
+                  &:hover {
+                    background-color: var(--brand-color-2);
+                  }
+                }
               }
 
-              &:hover {
-                background-color: var(--brand-color-2);
+              .content-view {
+                border-radius: 1000px;
+                justify-content: center;
+                width: 90%;
+                margin: auto;
+                cursor: pointer;
+
+                &.active {
+                  background-color: var(--brand-color-2);
+                  opacity: 0.5;
+                  pointer-events: none;
+                }
+
+                &:hover {
+                  background-color: var(--brand-color-2);
+                }
               }
             }
+
+            hr {
+              width: calc(100% - 20px);
+              margin: auto;
+              border: 1px solid var(--brand-color-3);
+            }
+
           }
 
           .selector {

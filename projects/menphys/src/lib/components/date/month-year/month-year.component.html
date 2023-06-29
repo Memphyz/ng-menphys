@@ -14,32 +14,21 @@
       class="content-selector"
       (click)="inputYearAnimationRef.click(); handleAnimation(inputYearRef)"
     >
-      {{currentYear}}
+      {{currentMonth}}&nbsp;{{currentYear}}
       <ng-container *ngIf="inputYearRef.checked">
         <ng-container
           *ngTemplateOutlet="loadDataRef; context: {animation: inputYearAnimationRef.checked, type: 'year'}" />
       </ng-container>
     </div>
-    <input
-      #inputMonthRef
-      hidden
-      type="checkbox"
-    />
-    <input
-      #inputMonthAnimationRef
-      hidden
-      type="checkbox"
-    />
-    <div
-      class="content-selector"
-      (click)="inputMonthAnimationRef.click(); handleAnimation(inputMonthRef)"
-    >
-      {{currentMonth}}
-      <ng-container *ngIf="inputMonthRef.checked">
-        <ng-container
-          *ngTemplateOutlet="loadDataRef; context: {animation: inputMonthAnimationRef.checked, type: 'month'}"
-        />
-      </ng-container>
+    <div class="months-changer">
+      <menphys-icon
+        name="chevron_up"
+        [size]="20"
+      />
+      <menphys-icon
+        name="chevron_down"
+        [size]="20"
+      />
     </div>
   </span>
 </div>
@@ -64,11 +53,27 @@
         #dataRef
       >
         <ng-container *ngFor="let content of data; trackBy: trackByFn; let i = index">
-          <span
-            class="content-view"
-            [class.active]="type === 'year' ? content === currentYear : content === currentMonth"
-            (click)="handleUpdate(type, type === 'year' ? content : i)"
-          >{{content}}</span>
+          <div class="year-data">
+            <input
+              type="checkbox"
+              hidden
+              #showMonths
+            >
+            <span
+              class="content-view"
+              [class.active]="type === 'year' ? content === currentYear : content === currentMonth"
+              (click)="$event.stopPropagation(); $event.preventDefault(); handleUpdate(type, type === 'year' ? content : i); showMonths.click()"
+            >{{content}}</span>
+            <div
+              class="months"
+              *ngIf="showMonths.checked"
+            >
+              <ng-container *ngFor="let month of getContent('month'); trackBy: trackByFn; let i = index">
+                <span>{{month}}</span>
+              </ng-container>
+            </div>
+            </div>
+            <hr>
         </ng-container>
       </div>
       <div
@@ -80,4 +85,3 @@
 
   </div>
 </ng-template>
-
