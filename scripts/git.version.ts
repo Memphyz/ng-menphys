@@ -6,7 +6,7 @@ import { dedent } from 'tslint/lib/utils';
 async function createVersionsFile(filename: string) {
   const revision = execSync('git rev-parse --short HEAD').toString().trim();
   const branch = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
-  const total = Number(execSync("git rev-list --count HEAD").toString().trim());
+  const total = Number(execSync("git rev-list --count HEAD").toString().trim()) + 1;
   const longSHA = execSync("git rev-parse HEAD").toString().trim();
   const shortSHA = execSync("git rev-parse --short HEAD").toString().trim();
   const authorName = execSync("git log -1 --pretty=format:'%an'").toString().trim();
