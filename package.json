@@ -26,6 +26,7 @@
     "husky": "^8.0.3",
     "menphys": "file:dist/menphys",
     "ngx-highlightjs": "^9.0.0",
+    "ngx-mask": "^16.2.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "tslint": "^6.1.3",

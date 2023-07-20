@@ -7,23 +7,12 @@
   border-radius: 6px;
   border: 2px solid var(--brand-color-3);
   padding: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+  z-index: 1090;
 
-  &::before {
-    content: "";
-    position: absolute;
-    width: 15px;
-    height: 15px;
-    background-color: var(--brand-color-2);
-    border: 2px solid var(--brand-color-3);
-    top: -10px;
-    transform: rotate(45deg);
-    border-bottom: 0px;
-    border-right: 0px;
-    left: 12px;
-    border-top-left-radius: 6px;
-
-
-  }
 
   table {
     width: 100%;

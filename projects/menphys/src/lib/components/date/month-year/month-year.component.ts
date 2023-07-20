@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { ModuleConfig } from '@menphys/menphys.module';
 
 const DATA_LENGTH = 2
@@ -10,7 +10,7 @@ const DATA_LENGTH = 2
 })
 export class MonthYearComponent {
 
-  public value = new Date();
+  @Input() public value = new Date();
 
   public viewYear = this.currentYear;
 

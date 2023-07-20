@@ -14,6 +14,7 @@ import { DateComponent } from './date/date/date.component';
 import { MonthYearComponent } from './date/month-year/month-year.component';
 import { TimeComponent } from './date/time/time.component';
 import { CalendarComponent } from './date/calendar/calendar.component';
+import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { CalendarComponent } from './date/calendar/calendar.component';
     ReactiveFormsModule,
     RouterModule,
     SharedModule,
-
+    NgxMaskDirective,
+    NgxMaskPipe
   ],
   exports: [
     InputComponent,

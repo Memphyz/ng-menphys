@@ -1,62 +1,79 @@
-import { Component, Inject, type OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Inject, type OnInit } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { ModuleConfig } from '@menphys/menphys.module';
 import { noop } from 'rxjs';
 
 interface Day { day: number, disabled: boolean }
+interface Neighbors {
+  days: any[];
+  ghosts: number;
+}
 
 @Component({
   selector: 'menphys-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: [ './calendar.component.scss' ],
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, AfterViewInit {
 
   public weeks: string[] = [];
   public value = new Date();
+  private days: Day[];
+  private previeus: Day[] = [];
+  private ghosts: number[]
 
-  public get ghosts(): number[] {
-    const weekdayStart = new Date(this.value.getFullYear(), this.value.getMonth() + 1, 1).getDay();
-    return Array(weekdayStart).fill(0);
+  constructor (@Inject('config') private readonly config: ModuleConfig, private readonly cd: ChangeDetectorRef) { cd.detach() }
+
+  public ngAfterViewInit(): void {
+    this.cd.detectChanges()
   }
-
-  constructor (@Inject('config') private readonly config: ModuleConfig) { }
 
   public ngOnInit(): void {
+    this.updateInfos();
+  }
+
+  public updateInfos(): void {
     this.weeks = this.getWeekDays();
-  }
-
-  public getDaysQuantity(year: number, month: number): number[] {
-    return Array(new Date(year, month, 0).getDate() + 1).fill(null).map((_value, index) => index++).slice(1)
-  }
-
-  public getWeekdays(weekIndex: number): Day[] {
-    const previous: Day[] = [];
-    const later: Day[] = [];
-    if (this.ghosts.length) {
-      previous.push(...this.getLastDaysPrevieousMonth())
-    }
-    const weeks = this.weeks.length;
-    const ghostQuantity = previous.length
-    const start = weekIndex ? (weekIndex * weeks) - ghostQuantity : (weekIndex * weeks);
-    const end = (weekIndex ? ((weekIndex) * weeks) + ghostQuantity : ((weekIndex) * weeks) + ghostQuantity);
-    const days = this.getDaysQuantity(this.value.getFullYear(), this.value.getMonth() + 1).map(value => {
+    const daysLastMonth = new Date(this.value.getFullYear(), this.value.getMonth(), 0).getDate();
+    const weekdayStart = new Date(this.value.getFullYear(), this.value.getMonth() - 1, daysLastMonth).getDay();
+    this.ghosts = Array(weekdayStart + 1).fill(0);
+    this.days = this.getDaysQuantity(this.value.getFullYear(), this.value.getMonth()).map(value => {
       return {
         day: value,
         disabled: false
       }
     })
-      .slice(start, ghostQuantity ? end - 1 : end);
-    if (days.at(days.length - 1)?.day > 27 && days.length < weeks) {
-      const diff = weeks - days.length;
-      later.push(...this.getFirstDaysLaterMonth().splice(0, diff))
+    if (this.ghosts.length) {
+      this.previeus = this.getLastDaysPrevieousMonth();
     }
-    return !weekIndex ? [ ...previous, ...days ] : [ ...days, ...later ];
+    this.cd.detectChanges();
+  }
+
+  public getDaysQuantity(year: number, month: number): number[] {
+    return Array(new Date(year, month + 1, 0).getDate()).fill(null).map((_value, index) => index += 1)
+  }
+
+  public getWeekdays(weekIndex: number): Day[] {
+    const weeks = this.weeks.length;
+    const ghosts = this.previeus.length
+    const end = (weekIndex ? ((weekIndex) * weeks) + weeks - ghosts : (weeks) - ghosts);
+    const start = (weekIndex ? (weekIndex * weeks) - ghosts : (weekIndex * weeks));
+    const days = this.days.slice(start, end);
+    const later = this.getLaterDays(days);
+    return !weekIndex ? [ ...this.previeus, ...days ] : [ ...days, ...later ];
+  }
+
+  private getLaterDays(days: Day[]): Day[] {
+    if (days.at(days.length - 1)?.day > 27 && days.length < this.weeks.length) {
+      const diff = this.weeks.length - days.length;
+      return this.getFirstDaysLaterMonth().splice(0, diff);
+    }
+    return [];
   }
 
   public getLastDaysPrevieousMonth(): Day[] {
     const days = this.getDaysQuantity(this.value.getFullYear(), this.value.getMonth());
-    return days.slice(days.length - (this.ghosts.length - 2)).map(value => {
+    return days.slice(days.length - this.ghosts.length).map(value => {
       return {
         day: value,
         disabled: true
@@ -89,7 +106,8 @@ export class CalendarComponent implements OnInit {
   }
 
   public handleSelect(day: number): void {
-    console.log(new Date(this.value.getFullYear(), this.value.getMonth(), day))
+    console.log(new Date(this.value.getFullYear(), this.value.getMonth(), day));
+    this.cd.detectChanges();
   }
 
 }

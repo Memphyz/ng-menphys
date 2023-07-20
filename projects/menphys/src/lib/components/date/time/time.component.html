@@ -1,1 +1,48 @@
-<p>time works!</p>
+<section>
+  <menphys-icon
+    name="chevron_up"
+    [size]="20"
+  />
+  <input
+    [mask]="'00'"
+    [(ngModel)]="hours"
+    placeholder="00"
+    name="hour"
+  />
+  <menphys-icon
+    name="chevron_down"
+    [size]="20"
+  />
+</section>
+<section>
+  <menphys-icon
+    name="chevron_up"
+    [size]="20"
+  />
+  <input
+    name="minute"
+    placeholder="00"
+    [(ngModel)]="minutes"
+    [mask]="'00'"
+  />
+  <menphys-icon
+    name="chevron_down"
+    [size]="20"
+  />
+</section>
+<section>
+  <menphys-icon
+    name="chevron_up"
+    [size]="20"
+  />
+  <input
+    placeholder="00"
+    [mask]="'00'"
+    [(ngModel)]="seconds"
+    name="seconds"
+  />
+  <menphys-icon
+    name="chevron_down"
+    [size]="20"
+  />
+</section>

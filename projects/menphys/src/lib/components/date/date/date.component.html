@@ -26,6 +26,8 @@
 ></menphys-input>
 <menphys-calendar
   *ngIf="true || isFocused"
-  [style.top.px]="calendarPosition.top"
-  [style.left.px]="calendarPosition.left"
+  [style.top.px]="calendarPosition.top || null"
+  [style.left.px]="calendarPosition.left || null"
+  [style.right.px]="calendarPosition.right || null"
+  [style.bottom.px]="calendarPosition.right || null"
 />

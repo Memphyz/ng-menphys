@@ -39,9 +39,14 @@ import {
 
   public isFocused = false;
 
-  public calendarPosition = {
+  public calendarPosition: {
+    top?: number,
+    left?: number,
+    right?: number,
+    bottom?: number
+  } = {
     top: 0,
-    left: 0
+      left: 0,
   }
 
   constructor (private readonly el: ElementRef<HTMLElement>) {
@@ -52,9 +57,8 @@ import {
     if (!this.el?.nativeElement) {
       return undefined;
     }
-
+    console.log('entrou')
     const position = this.el.nativeElement.getBoundingClientRect();
-
     this.calendarPosition = {
       top: position.y + position.height + 15,
       left: position.x

@@ -8,6 +8,7 @@ import { SharedModule } from './shared/shared.module';
 import * as dark from './shared/themes/dark.json';
 import * as light from './shared/themes/light.json';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 export interface ModuleConfig {
   theme: 'dark' | 'light';
@@ -22,7 +23,9 @@ export interface ModuleConfig {
     AbstractsModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    NgxMaskDirective,
+    NgxMaskPipe
   ],
   exports: [
     ComponentsModule,
@@ -31,6 +34,11 @@ export interface ModuleConfig {
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxMaskDirective,
+    NgxMaskPipe
+  ],
+  providers: [
+    provideNgxMask()
   ]
 })
 export class MenphysModule {
