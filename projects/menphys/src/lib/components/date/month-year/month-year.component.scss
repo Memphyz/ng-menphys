@@ -33,8 +33,6 @@
           background-color: var(--brand-color-6);
         }
 
-
-
         .content-data {
           position: absolute;
           height: 100%;
@@ -53,6 +51,11 @@
           justify-content: space-between;
           cursor: default;
 
+          &.month {
+            justify-content: center;
+            align-items: center;
+          }
+
           .data {
             display: flex;
             align-items: center;
@@ -61,40 +64,37 @@
             overflow: auto;
             gap: 5px;
 
-            .year-data {
-              .months {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                width: 80%;
-                margin: auto;
-
-                span {
-                  border-radius: 15px;
-                  cursor: pointer;
-
-                  &:hover {
-                    background-color: var(--brand-color-2);
-                  }
-                }
-              }
+            &.month {
+              flex-wrap: wrap;
+              align-items: center;
+              justify-content: center;
+              flex-direction: unset;
+              width: 100%;
 
               .content-view {
-                border-radius: 1000px;
-                justify-content: center;
-                width: 90%;
-                margin: auto;
-                cursor: pointer;
+                width: 75px;
+              }
+            }
 
-                &.active {
-                  background-color: var(--brand-color-2);
-                  opacity: 0.5;
-                  pointer-events: none;
-                }
+            .content-view {
+              border-radius: 1000px;
+              justify-content: center;
+              width: 90%;
+              margin: auto;
+              cursor: pointer;
 
-                &:hover {
-                  background-color: var(--brand-color-2);
-                }
+              &.active {
+                background-color: var(--brand-color-2);
+              }
+
+              &.disabled {
+                background-color: var(--brand-color-2);
+                opacity: 0.5;
+                pointer-events: none;
+              }
+
+              &:hover {
+                background-color: var(--brand-color-2);
               }
             }
 

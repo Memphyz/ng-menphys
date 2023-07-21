@@ -1,7 +1,10 @@
+@import './../../../../assets/styles/animations';
+
 :host {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
 
   section {
     display: flex;
@@ -11,6 +14,12 @@
 
     menphys-icon {
       cursor: pointer;
+
+      &.disabled {
+        background-color: var(--disabled-3);
+        pointer-events: none;
+        cursor: not-allowed;
+      }
 
       &:hover {
         background-color: var(--disabled-3);
@@ -28,6 +37,12 @@
       font-size: 28px;
       text-align: center;
       font-weight: 600;
+
+      &.invalid-time {
+        animation: shake-animation 4.72s ease infinite;
+        transform-origin: 50% 50%;
+        border: 2px solid var(--danger-4);
+      }
 
       &::-webkit-outer-spin-button,
       &::-webkit-inner-spin-button {

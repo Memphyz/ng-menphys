@@ -57,7 +57,6 @@ import {
     if (!this.el?.nativeElement) {
       return undefined;
     }
-    console.log('entrou')
     const position = this.el.nativeElement.getBoundingClientRect();
     this.calendarPosition = {
       top: position.y + position.height + 15,

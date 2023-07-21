@@ -1,15 +1,24 @@
 <section>
   <menphys-icon
     name="chevron_up"
+    [class.disabled]="hours === '23'"
+    (click)="handleArrow('hours', '+')"
     [size]="20"
   />
   <input
-    [mask]="'00'"
+    [mask]="'0*'"
+    [maxlength]="2"
     [(ngModel)]="hours"
+    [class.invalid-time]="invalid"
     placeholder="00"
+    (wheel)="handleWheel($event, 'hours')"
+    (input)="handleUpdateValue($event, 'hour')"
+    (blur)="handleFormatData()"
     name="hour"
   />
   <menphys-icon
+    (click)="handleArrow('hours', '-')"
+    [class.disabled]="hours === '00' || hours === '0'"
     name="chevron_down"
     [size]="20"
   />
@@ -17,32 +26,48 @@
 <section>
   <menphys-icon
     name="chevron_up"
+    [class.disabled]="hours === '59'"
+    (click)="handleArrow('minutes', '+')"
     [size]="20"
   />
   <input
     name="minute"
     placeholder="00"
     [(ngModel)]="minutes"
+    [class.invalid-time]="invalid"
+    (wheel)="handleWheel($event, 'minutes')"
+    (input)="handleUpdateValue($event, 'minute')"
+    (blur)="handleFormatData()"
     [mask]="'00'"
   />
   <menphys-icon
     name="chevron_down"
+    [class.disabled]="minutes === '00' || minutes === '0'"
+    (click)="handleArrow('minutes', '-')"
     [size]="20"
   />
 </section>
 <section>
   <menphys-icon
     name="chevron_up"
+    [class.disabled]="hours === '59'"
+    (click)="handleArrow('seconds', '+')"
     [size]="20"
   />
   <input
     placeholder="00"
     [mask]="'00'"
     [(ngModel)]="seconds"
+    [class.invalid-time]="invalid"
+    (wheel)="handleWheel($event, 'seconds')"
+    (input)="handleUpdateValue($event, 'second')"
+    (blur)="handleFormatData()"
     name="seconds"
   />
   <menphys-icon
     name="chevron_down"
+    [class.disabled]="seconds === '00' || seconds === '0'"
+    (click)="handleArrow('seconds', '-')"
     [size]="20"
   />
 </section>

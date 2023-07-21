@@ -1,24 +1,65 @@
+<ng-template
+  #loadDataRef
+  let-type="type"
+>
+  <div
+    class="content-data {{type}}"
+    [class.animation]="preShow"
+  >
+      <div
+        class="selector content-header"
+        *ngIf="type === 'year'"
+      ></div>
+      <div
+        class="data {{type}}"
+        #dataRef
+      >
+      <ng-container *ngIf="type === 'year' else monthRef">
+        <ng-container *ngFor="let content of getYears(); trackBy: trackByFn; let i = index">
+          <div class="year-data">
+            <span
+              class="content-view"
+              *ngIf="type === 'year'"
+              [class.active]="content === currentYear "
+              (click)="handleSelectYear(content)"
+            >{{content}}</span>
+          </div>
+          <hr>
+          </ng-container>
+      </ng-container>
+      <ng-template #monthRef>
+        <ng-container *ngFor="let data of getMonths(); trackBy: trackByFn; let i = index">
+          <span
+            class="content-view"
+            (click)="handleUpdate(i)"
+          >{{data}}</span>
+        </ng-container>
+      </ng-template>
+
+      </div>
+      <div
+        class="selector content-footer"
+        *ngIf="type === 'year'"
+      ></div>
+</div>
+</ng-template>
+
 <div class="content-month-year-wrapper">
   <span>
-    <input
-      #inputYearRef
-      hidden
-      type="checkbox"
-    />
-    <input
-      #inputYearAnimationRef
-      hidden
-      type="checkbox"
-    />
     <div
       class="content-selector"
-      (click)="inputYearAnimationRef.click(); handleAnimation(inputYearRef)"
+      (click)="!show && toggle()"
     >
       {{currentMonth}}&nbsp;{{currentYear}}
-      <ng-container *ngIf="inputYearRef.checked">
-        <ng-container
-          *ngTemplateOutlet="loadDataRef; context: {animation: inputYearAnimationRef.checked, type: 'year'}" />
+      <ng-container *ngIf="show">
+        <ng-template #yearRefTemplate>
+          <ng-container *ngTemplateOutlet="loadDataRef; context: {type: 'year'}" />
+        </ng-template>
+        <ng-container *ngIf="showMonth else yearRefTemplate">
+          <ng-container *ngTemplateOutlet="loadDataRef; context: {type: 'month'}" />
+        </ng-container>
       </ng-container>
+
     </div>
     <div class="months-changer">
       <menphys-icon
@@ -30,58 +71,5 @@
         [size]="20"
       />
     </div>
-  </span>
-</div>
-
-<ng-template
-  #loadDataRef
-  let-animation="animation"
-  let-type="type"
->
-  <div
-    class="content-data {{type}}"
-    [class.animation]="animation"
-  >
-    <ng-container *ngIf="getContent(type) as data">
-      <div
-        class="selector content-header"
-        *ngIf="type === 'year'"
-        (click)="handleLoadYears('top', data, $event)"
-      ></div>
-      <div
-        class="data"
-        #dataRef
-      >
-        <ng-container *ngFor="let content of data; trackBy: trackByFn; let i = index">
-          <div class="year-data">
-            <input
-              type="checkbox"
-              hidden
-              #showMonths
-            >
-            <span
-              class="content-view"
-              [class.active]="type === 'year' ? content === currentYear : content === currentMonth"
-              (click)="$event.stopPropagation(); $event.preventDefault(); handleUpdate(type, type === 'year' ? content : i); showMonths.click()"
-            >{{content}}</span>
-            <div
-              class="months"
-              *ngIf="showMonths.checked"
-            >
-              <ng-container *ngFor="let month of getContent('month'); trackBy: trackByFn; let i = index">
-                <span>{{month}}</span>
-              </ng-container>
-            </div>
-            </div>
-            <hr>
-        </ng-container>
-      </div>
-      <div
-        class="selector content-footer"
-        *ngIf="type === 'year'"
-        (click)="handleLoadYears('bottom', data, $event)"
-      ></div>
-    </ng-container>
-
-  </div>
-</ng-template>
+    </span>
+    </div>
