@@ -20,7 +20,7 @@
             <span
               class="content-view"
               *ngIf="type === 'year'"
-              [class.active]="content === currentYear "
+              [class.active]="content === currentYear"
               (click)="handleSelectYear(content)"
             >{{content}}</span>
           </div>
@@ -31,6 +31,7 @@
         <ng-container *ngFor="let data of getMonths(); trackBy: trackByFn; let i = index">
           <span
             class="content-view"
+             [class.active]="data === currentMonthShort"
             (click)="handleUpdate(i)"
           >{{data}}</span>
         </ng-container>
@@ -50,7 +51,14 @@
       class="content-selector"
       (click)="!show && toggle()"
     >
-      {{currentMonth}}&nbsp;{{currentYear}}
+    <ul #listRef>
+      <ng-container *ngFor="let data of currentViewData; trackBy: trackByFn">
+        <li [class.active]="memValue.getFullYear() === data.year && memValue.getMonth() === data.monthIndex">
+          {{data.month}}&nbsp;{{data.year}}
+        </li>
+      </ng-container>
+    </ul>
+
       <ng-container *ngIf="show">
         <ng-template #yearRefTemplate>
           <ng-container *ngTemplateOutlet="loadDataRef; context: {type: 'year'}" />
@@ -64,10 +72,12 @@
     <div class="months-changer">
       <menphys-icon
         name="chevron_up"
+        (click)="handleArrows('up')"
         [size]="20"
-      />
-      <menphys-icon
+        />
+        <menphys-icon
         name="chevron_down"
+        (click)="handleArrows('down')"
         [size]="20"
       />
     </div>

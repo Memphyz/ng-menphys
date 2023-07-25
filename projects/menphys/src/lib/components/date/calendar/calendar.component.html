@@ -16,6 +16,7 @@
           <td
             *ngFor="let weekday of weekdays; trackBy: trackByFn"
             [class.disabled]="weekday.disabled"
+            [class.active]="weekday.current"
             (click)="weekday && handleSelect(weekday.day)"
           >
             {{weekday.day || ''}}

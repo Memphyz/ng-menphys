@@ -1,30 +1,43 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Inject, Input } from '@angular/core';
-import { ModuleConfig } from '@menphys/menphys.module';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { AfterContentChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, Input, ViewChild } from '@angular/core';
+import type { ModuleConfig } from '@menphys/menphys.module';
 
 const DATA_LENGTH = 2
-
+interface ViewMonth {
+  month: string,
+  year: number,
+  monthIndex: number
+}
 @Component({
   selector: 'menphys-month-year',
   templateUrl: './month-year.component.html',
   styleUrls: [ './month-year.component.scss' ]
 })
-export class MonthYearComponent implements AfterViewInit {
+export class MonthYearComponent implements AfterViewInit, AfterContentChecked {
 
   @Input() public value = new Date();
 
+  public memValue = this.value;
   public year = this.currentYear;
   public showMonth = false;
   public preShow = false;
   public show = false;
+  public monthChangeAnimation = '';
+  public currentViewData: ViewMonth[] = [];
+
+  @ViewChild('listRef', { static: true }) list: ElementRef<HTMLUListElement>;
 
   constructor (@Inject('config') private readonly config: ModuleConfig, private readonly cd: ChangeDetectorRef) {
     this.cd.detach();
   }
+  public ngAfterContentChecked(): void {
+    // this.updateScrollUl();
+  }
 
-  public get currentMonth(): string {
+  public get currentMonthShort(): string {
     const month = Intl.DateTimeFormat(this.config.locale, {
-      month: 'long'
-    }).format(this.value)
+      month: 'short'
+    }).format(this.memValue)
     return this.formatMonth(month)
   }
 
@@ -33,8 +46,10 @@ export class MonthYearComponent implements AfterViewInit {
   }
 
   public ngAfterViewInit(): void {
+    this.updateViewData()
     this.cd.detectChanges();
   }
+
 
   public trackByFn(i: number): number {
     return i;
@@ -90,4 +105,67 @@ export class MonthYearComponent implements AfterViewInit {
     }).format(new Date(this.currentYear, index, 1))));
   }
 
+  public handleArrows(event: 'up' | 'down'): void {
+    if (event === 'up') {
+      this.updateViewData(event);
+      this.cd.detectChanges();
+      return undefined;
+    }
+    this.updateViewData(event);
+    this.memValue.setMonth(this.memValue.getMonth() + 1);
+    this.cd.detectChanges();
+  }
+
+  private updateScrollUl(): void {
+    const childs = Array.from(this.list.nativeElement.children);
+    const childIndex = childs.findIndex(el => el.classList.contains('active'));
+    childs.at(childIndex)?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  private updateViewData(event?: 'up' | 'down'): void {
+    if (!this.currentViewData.length) {
+      this.initializeCurrentView();
+    }
+    if (event === 'up') {
+      // setTimeout(() => {
+      //   console.log(this.memValue)
+      //   this.cd.detectChanges();
+      //   this.updateScrollUl();
+      // }, 500)
+      const last = this.currentViewData.at(0);
+      const date = new Date(last.year, last.monthIndex + 1, 1);
+      this.currentViewData.unshift({
+        month: this.getMonthName(date),
+        year: date.getFullYear(),
+        monthIndex: date.getMonth()
+      });
+      this.memValue.setMonth(this.memValue.getMonth() + 1);
+      this.cd.detectChanges();
+      this.updateScrollUl();
+
+      this.currentViewData.pop();
+    }
+  }
+
+
+  private initializeCurrentView() {
+    const treeMonthEarlier = new Date(this.memValue.getFullYear(), this.memValue.getMonth() - 2, 1);
+    const monthEarlier = treeMonthEarlier.getMonth() + 1;
+    Array(3).fill(0).forEach((_value, i) => {
+      treeMonthEarlier.setMonth(monthEarlier + i);
+      const month = this.getMonthName(treeMonthEarlier);
+      this.currentViewData.push({
+        month: month,
+        year: treeMonthEarlier.getFullYear(),
+        monthIndex: treeMonthEarlier.getMonth()
+      });
+    });
+  }
+
+
+  private getMonthName(date: Date) {
+    return this.formatMonth(Intl.DateTimeFormat(this.config.locale, {
+      month: 'long'
+    }).format(date));
+  }
 }
