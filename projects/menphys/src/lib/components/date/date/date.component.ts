@@ -3,10 +3,13 @@ import {
   AfterContentChecked,
   Component,
   ElementRef,
-  OnInit
+  OnInit,
+  Optional,
+  Self
 }
 
   from '@angular/core';
+import { NgControl } from '@angular/forms';
 
 import {
   InputProperties
@@ -24,6 +27,7 @@ import {
 import {
   Subject,
   distinctUntilChanged,
+  filter,
   interval,
   map,
   noop
@@ -38,7 +42,7 @@ import {
   templateUrl: './date.component.html',
   styleUrls: [ './date.component.scss' ]
 }
-) export class DateComponent extends InputProperties<Date> implements AfterContentChecked, OnInit {
+) export class DateComponent extends InputProperties<Date> implements OnInit {
 
   public isFocused = false;
 
@@ -54,24 +58,15 @@ import {
 
   private readonly updatePosition = new Subject<string>();
 
-  constructor (private readonly el: ElementRef<HTMLElement>) {
-    super();
-  }
-
-  public ngAfterContentChecked(): void {
-    if (!this.el?.nativeElement) {
-      return undefined;
-    }
-    const position = this.el.nativeElement.getBoundingClientRect();
-    this.calendarPosition = {
-      top: position.y + position.height + 15,
-      left: position.x
-    }
+  constructor (private readonly el: ElementRef<HTMLElement>, @Optional() @Self() protected override readonly ngControl: NgControl) {
+    super(null, ngControl);
+    this.ngControl && (this.ngControl.valueAccessor || (this.ngControl.valueAccessor = this));
   }
 
   public ngOnInit(): void {
     this.updatePosition
       .pipe(
+        filter(() => !!this.el),
         distinctUntilChanged(),
         untilDestroyed(this)
       )

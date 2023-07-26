@@ -31,9 +31,9 @@
         <ng-container *ngFor="let data of getMonths(); trackBy: trackByFn; let i = index">
           <span
             class="content-view"
-             [class.active]="data === currentMonthShort"
-            (click)="handleUpdate(i)"
-          >{{data}}</span>
+             [class.active]="data.month === currentMonthShort"
+             (click)="handleUpdate(true, data.monthIndex)"
+          >{{data.month}}</span>
         </ng-container>
       </ng-template>
 

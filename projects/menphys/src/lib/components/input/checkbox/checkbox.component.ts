@@ -1,17 +1,13 @@
-import { Component, Input } from '@angular/core';
-import { type ControlValueAccessor } from '@angular/forms';
-import { CommonControlValueAcessorMethods } from '@menphys/shared/reactive-forms/control-value-acessor-methods';
-import { FormUtils } from '@menphys/shared/utils/form.utils';
+import { Component, Input, Optional, Self } from '@angular/core';
+import { NgControl, type ControlValueAccessor } from '@angular/forms';
+import { AbstractControlValueAccessor } from '@menphys/abstracts/control-accessor.abstract';
 
 @Component({
   selector: 'menphys-checkbox',
   templateUrl: './checkbox.component.html',
   styleUrls: [ './checkbox.component.scss' ],
-  providers: [
-    FormUtils.reactiveProvider(CheckboxComponent)
-  ]
 })
-export class CheckboxComponent extends CommonControlValueAcessorMethods<boolean> implements ControlValueAccessor {
+export class CheckboxComponent extends AbstractControlValueAccessor<boolean> implements ControlValueAccessor {
 
   /**
    * Sets a name of input above him
@@ -29,9 +25,8 @@ export class CheckboxComponent extends CommonControlValueAcessorMethods<boolean>
  */
   @Input() public required: boolean;
 
-  constructor () {
-    super();
-    this.value = !!this.value;
+  constructor (@Optional() @Self() protected override readonly ngControl: NgControl) {
+    super(null, ngControl);
   }
 
   public btnToggle(): void {

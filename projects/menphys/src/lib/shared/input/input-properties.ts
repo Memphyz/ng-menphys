@@ -1,12 +1,18 @@
-import { Component, EventEmitter, HostBinding, Input, Output } from "@angular/core";
+import { Component, EventEmitter, HostBinding, Inject, InjectionToken, Input, Optional, Output, Self } from "@angular/core";
+import { NgControl } from "@angular/forms";
+import { AbstractControlValueAccessor } from "@menphys/abstracts/control-accessor.abstract";
 import { InputType } from "@menphys/interfaces/types/input-type";
 import { Icon } from "@menphys/models/icon/icon";
-import { CommonControlValueAcessorMethods } from "@menphys/shared/reactive-forms/control-value-acessor-methods";
+
+const VALUE = new InjectionToken<boolean>('value', {
+  providedIn: 'root', // optional
+  factory: () => null
+});
 
 @Component({
   template: ''
 })
-export class InputProperties<V> extends CommonControlValueAcessorMethods<V> {
+export abstract class InputProperties<V> extends AbstractControlValueAccessor<V> {
   /**
    * Returns the content type of the object.
    *
@@ -321,6 +327,7 @@ export class InputProperties<V> extends CommonControlValueAcessorMethods<V> {
    */
   @Output() public onPaste = new EventEmitter<ClipboardEvent>();
 
+
   /**
    * Return a righticon in object format, converted if the input parameter was a string
    *
@@ -343,8 +350,8 @@ export class InputProperties<V> extends CommonControlValueAcessorMethods<V> {
     return this.righticon as Icon;
   }
 
-  constructor () {
-    super();
+  constructor (@Inject(VALUE) value: V, @Optional() @Self() protected override readonly ngControl: NgControl) {
+    super(value, ngControl);
     if (this.lefticon && typeof this.lefticon === 'string') {
       this.lefticon = new Icon({
         name: this.lefticon,

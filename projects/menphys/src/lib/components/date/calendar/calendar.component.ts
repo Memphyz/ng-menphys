@@ -1,6 +1,8 @@
 import type { AfterViewInit, } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
-import { Component, Inject, type OnInit, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, Optional, Self, type OnInit } from '@angular/core';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { AbstractControlValueAccessor } from '@menphys/abstracts/control-accessor.abstract';
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { ModuleConfig } from '@menphys/menphys.module';
 
@@ -11,15 +13,19 @@ interface Day { day: number, disabled: boolean, current: boolean }
   templateUrl: './calendar.component.html',
   styleUrls: [ './calendar.component.scss' ],
 })
-export class CalendarComponent implements OnInit, AfterViewInit {
+export class CalendarComponent extends AbstractControlValueAccessor<Date> implements OnInit, AfterViewInit, ControlValueAccessor {
 
   public weeks: string[] = [];
-  public value = new Date();
   private days: Day[];
   private previeus: Day[] = [];
-  private ghosts: number[]
+  private ghosts: number[];
+  public visibleValue = this.value || new Date();
 
-  constructor (@Inject('config') private readonly config: ModuleConfig, private readonly cd: ChangeDetectorRef) { cd.detach() }
+  constructor (@Inject('config') private readonly config: ModuleConfig, public readonly cd: ChangeDetectorRef, @Optional() @Self() protected override readonly ngControl: NgControl) {
+    super(new Date(), ngControl);
+    this.ngControl && (this.ngControl.valueAccessor || (this.ngControl.valueAccessor = this));
+    cd.detach()
+  }
 
   public ngAfterViewInit(): void {
     this.cd.detectChanges()
@@ -61,10 +67,10 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   private updateInfos(): void {
     this.weeks = this.getWeekDays();
-    const daysLastMonth = new Date(this.value.getFullYear(), this.value.getMonth(), 0).getDate();
-    const weekdayStart = new Date(this.value.getFullYear(), this.value.getMonth() - 1, daysLastMonth).getDay();
+    const daysLastMonth = new Date(this.visibleValue.getFullYear(), this.visibleValue.getMonth(), 0).getDate();
+    const weekdayStart = new Date(this.visibleValue.getFullYear(), this.visibleValue.getMonth() - 1, daysLastMonth).getDay();
     this.ghosts = Array(weekdayStart + 1).fill(0);
-    this.days = this.getDaysQuantity(this.value.getFullYear(), this.value.getMonth()).map(value => {
+    this.days = this.getDaysQuantity(this.visibleValue.getFullYear(), this.visibleValue.getMonth()).map(value => {
       return {
         day: value,
         disabled: false,
@@ -90,7 +96,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   }
 
   private getLastDaysPrevieousMonth(): Day[] {
-    const days = this.getDaysQuantity(this.value.getFullYear(), this.value.getMonth());
+    const days = this.getDaysQuantity(this.visibleValue.getFullYear(), this.visibleValue.getMonth());
     return days.slice(days.length - this.ghosts.length).map(value => {
       return {
         day: value,
@@ -100,7 +106,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     });
   }
   private getFirstDaysLaterMonth(): Day[] {
-    const days = this.getDaysQuantity(this.value.getFullYear(), this.value.getMonth() + 2);
+    const days = this.getDaysQuantity(this.visibleValue.getFullYear(), this.visibleValue.getMonth() + 2);
     return days.slice(0, this.weeks.length).map(value => {
       return {
         day: value,

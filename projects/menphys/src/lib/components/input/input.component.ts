@@ -16,8 +16,8 @@ const HIDE_LABEL = [
 })
 export class InputComponent<V> extends InputProperties<V>  {
 
-  constructor (@Optional() @Self() private readonly ngControl: NgControl) {
-    super();
+  constructor (@Optional() @Self() protected override readonly ngControl: NgControl) {
+    super(null, ngControl);
     this.ngControl && (this.ngControl.valueAccessor || (this.ngControl.valueAccessor = this));
   }
 

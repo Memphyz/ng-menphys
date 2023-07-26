@@ -1,5 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
-import { AfterContentChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Inject, Input, Optional, Output, Self, ViewChild } from '@angular/core';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { AbstractControlValueAccessor } from '@menphys/abstracts/control-accessor.abstract';
 import type { ModuleConfig } from '@menphys/menphys.module';
 
 const DATA_LENGTH = 2
@@ -11,11 +14,9 @@ interface ViewMonth {
 @Component({
   selector: 'menphys-month-year',
   templateUrl: './month-year.component.html',
-  styleUrls: [ './month-year.component.scss' ]
+  styleUrls: [ './month-year.component.scss' ],
 })
-export class MonthYearComponent implements AfterViewInit, AfterContentChecked {
-
-  @Input() public value = new Date();
+export class MonthYearComponent extends AbstractControlValueAccessor<Date> implements AfterViewInit, ControlValueAccessor {
 
   public memValue = this.value;
   public year = this.currentYear;
@@ -25,13 +26,14 @@ export class MonthYearComponent implements AfterViewInit, AfterContentChecked {
   public monthChangeAnimation = '';
   public currentViewData: ViewMonth[] = [];
 
+  @Output() public readonly onMonthChange = new EventEmitter<string>()
+
   @ViewChild('listRef', { static: true }) list: ElementRef<HTMLUListElement>;
 
-  constructor (@Inject('config') private readonly config: ModuleConfig, private readonly cd: ChangeDetectorRef) {
+  constructor (@Inject('config') private readonly config: ModuleConfig, private readonly cd: ChangeDetectorRef, @Optional() @Self() protected override readonly ngControl: NgControl) {
+    super(new Date(), ngControl);
+    this.ngControl && (this.ngControl.valueAccessor || (this.ngControl.valueAccessor = this));
     this.cd.detach();
-  }
-  public ngAfterContentChecked(): void {
-    // this.updateScrollUl();
   }
 
   public get currentMonthShort(): string {
@@ -46,10 +48,10 @@ export class MonthYearComponent implements AfterViewInit, AfterContentChecked {
   }
 
   public ngAfterViewInit(): void {
-    this.updateViewData()
+    this.memValue ||= this.value || new Date();
+    this.updateViewData();
     this.cd.detectChanges();
   }
-
 
   public trackByFn(i: number): number {
     return i;
@@ -76,16 +78,15 @@ export class MonthYearComponent implements AfterViewInit, AfterContentChecked {
     this.cd.detectChanges();
   }
 
-  public handleUpdate(month: number): void {
-    this.value = new Date(
-      Number(this.year),
-      month,
-      this.value.getDay(),
-      this.value.getHours(),
-      this.value.getMinutes(),
-      this.value.getSeconds(),
-    );
-    this.toggle();
+  public handleUpdate(toggle = true, monthIndex?: number): void {
+    if (monthIndex !== undefined && monthIndex !== null) {
+      this.memValue = new Date(this.year, monthIndex, this.memValue.getDate(), this.memValue.getHours(), this.memValue.getMinutes(), this.memValue.getSeconds())
+    }
+    this.currentViewData = [];
+    console.log(this.memValue)
+    this.value = this.memValue;
+    toggle && this.toggle();
+    this.updateViewData();
     this.cd.detectChanges();
   }
 
@@ -99,10 +100,16 @@ export class MonthYearComponent implements AfterViewInit, AfterContentChecked {
     return [ ...previeous.reverse(), this.year, ...later ];
   }
 
-  public getMonths(): string[] {
-    return Array(12).fill(0).map((_value, index) => this.formatMonth(Intl.DateTimeFormat(this.config.locale, {
-      month: 'short'
-    }).format(new Date(this.currentYear, index, 1))));
+  public getMonths(): ViewMonth[] {
+    return Array(12).fill(0).map((_value, index) => {
+      return {
+        month: this.formatMonth(Intl.DateTimeFormat(this.config.locale, {
+          month: 'short'
+        }).format(new Date(this.currentYear, index, 1))),
+        year: undefined,
+        monthIndex: index
+      }
+    });
   }
 
   public handleArrows(event: 'up' | 'down'): void {
@@ -112,54 +119,88 @@ export class MonthYearComponent implements AfterViewInit, AfterContentChecked {
       return undefined;
     }
     this.updateViewData(event);
-    this.memValue.setMonth(this.memValue.getMonth() + 1);
     this.cd.detectChanges();
   }
 
-  private updateScrollUl(): void {
+  private updateScrollUl(smooth = true): void {
     const childs = Array.from(this.list.nativeElement.children);
     const childIndex = childs.findIndex(el => el.classList.contains('active'));
-    childs.at(childIndex)?.scrollIntoView({ behavior: 'smooth' });
+    childs.at(childIndex)?.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto' });
   }
 
   private updateViewData(event?: 'up' | 'down'): void {
     if (!this.currentViewData.length) {
       this.initializeCurrentView();
     }
-    if (event === 'up') {
-      // setTimeout(() => {
-      //   console.log(this.memValue)
-      //   this.cd.detectChanges();
-      //   this.updateScrollUl();
-      // }, 500)
-      const last = this.currentViewData.at(0);
-      const date = new Date(last.year, last.monthIndex + 1, 1);
-      this.currentViewData.unshift({
-        month: this.getMonthName(date),
-        year: date.getFullYear(),
-        monthIndex: date.getMonth()
-      });
-      this.memValue.setMonth(this.memValue.getMonth() + 1);
-      this.cd.detectChanges();
-      this.updateScrollUl();
-
-      this.currentViewData.pop();
+    if (!event) {
+      return undefined;
     }
+    if (event === 'up') {
+      return this.loadUpperContent();
+    }
+    this.loadLowerContent();
   }
 
 
-  private initializeCurrentView() {
-    const treeMonthEarlier = new Date(this.memValue.getFullYear(), this.memValue.getMonth() - 2, 1);
-    const monthEarlier = treeMonthEarlier.getMonth() + 1;
+  private loadLowerContent(): void {
+    const next = this.currentViewData.at(this.currentViewData.length - 1);
+    const date = new Date(next.year, next.monthIndex + 1, 1);
+    this.currentViewData.push({
+      month: this.getMonthName(date),
+      year: date.getFullYear(),
+      monthIndex: date.getMonth()
+    });
+    this.list.nativeElement.scrollTo({ top: 0 });
+    this.currentViewData.shift();
+    this.memValue = new Date(
+      this.memValue.getFullYear(),
+      this.memValue.getMonth() + 1,
+      this.memValue.getDate(), this.memValue.getHours(), this.memValue.getMinutes(), this.memValue.getSeconds()
+    );
+    this.handleUpdate(false);
+    this.cd.detectChanges();
+    this.updateScrollUl();
+  }
+
+  private loadUpperContent(): void {
+    const first = this.currentViewData.at(0);
+    const date = new Date(first.year, first.monthIndex - 1, 1);
+    this.currentViewData.unshift({
+      month: this.getMonthName(date),
+      year: date.getFullYear(),
+      monthIndex: date.getMonth()
+    });
+    this.list.nativeElement.scrollTo({ top: this.list.nativeElement.scrollHeight });
+    this.currentViewData.pop();
+    this.memValue = new Date(
+      this.memValue.getFullYear(),
+      this.memValue.getMonth() - 1,
+      this.memValue.getDate(), this.memValue.getHours(), this.memValue.getMinutes(), this.memValue.getSeconds()
+    );
+    this.handleUpdate(false);
+    this.cd.detectChanges();
+    this.updateScrollUl();
+  }
+
+  private initializeCurrentView(): void {
+    const monthEarlierIndex = this.memValue.getMonth() - 2;
+    const year = monthEarlierIndex < 0 ? this.memValue.getFullYear() - 1 : this.memValue.getFullYear();
+    const monthsEarlier = new Date(year,
+      monthEarlierIndex < 0 ? 12 - Math.abs(monthEarlierIndex) : monthEarlierIndex,
+      1);
+    const monthEarlier = monthsEarlier.getMonth() + 1;
     Array(3).fill(0).forEach((_value, i) => {
-      treeMonthEarlier.setMonth(monthEarlier + i);
-      const month = this.getMonthName(treeMonthEarlier);
+      const nextMonth = monthEarlier + i
+      monthsEarlier.setMonth(nextMonth > 12 ? nextMonth - 12 : nextMonth);
+      const month = this.getMonthName(monthsEarlier);
       this.currentViewData.push({
         month: month,
-        year: treeMonthEarlier.getFullYear(),
-        monthIndex: treeMonthEarlier.getMonth()
+        year: monthsEarlier.getFullYear(),
+        monthIndex: monthsEarlier.getMonth(),
       });
     });
+    this.cd.detectChanges();
+    this.updateScrollUl(false);
   }
 
 

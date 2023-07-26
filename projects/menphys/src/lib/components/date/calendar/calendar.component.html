@@ -1,4 +1,7 @@
-<menphys-month-year [value]="value" />
+<menphys-month-year
+  [(ngModel)]="visibleValue"
+  (ngModelChange)="cd.detectChanges()"
+/>
 <table>
   <thead>
     <th
