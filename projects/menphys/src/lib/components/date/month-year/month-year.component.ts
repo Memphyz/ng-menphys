@@ -57,6 +57,12 @@ export class MonthYearComponent extends AbstractControlValueAccessor<Date> imple
     return i;
   }
 
+  public override writeValue(obj: Date): void {
+    super.writeValue(obj);
+    this.memValue = obj || this.memValue;
+    this.handleUpdate(false)
+  }
+
   public toggle(): void {
     if (this.show) {
       this.preShow = false;
@@ -83,8 +89,7 @@ export class MonthYearComponent extends AbstractControlValueAccessor<Date> imple
       this.memValue = new Date(this.year, monthIndex, this.memValue.getDate(), this.memValue.getHours(), this.memValue.getMinutes(), this.memValue.getSeconds())
     }
     this.currentViewData = [];
-    console.log(this.memValue)
-    this.value = this.memValue;
+    this.value !== this.memValue && (this.value = this.memValue);
     toggle && this.toggle();
     this.updateViewData();
     this.cd.detectChanges();
