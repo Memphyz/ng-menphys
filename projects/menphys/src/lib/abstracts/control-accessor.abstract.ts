@@ -1,5 +1,5 @@
 import { Optional, Self } from "@angular/core";
-import { ControlValueAccessor, NgControl } from "@angular/forms";
+import { AbstractControl, ControlValueAccessor, FormControl, NgControl } from "@angular/forms";
 
 export abstract class AbstractControlValueAccessor<T> implements ControlValueAccessor {
 
@@ -59,6 +59,10 @@ export abstract class AbstractControlValueAccessor<T> implements ControlValueAcc
    * @memberof AbstractControlValueAccessor
    */
   private _value: T;
+
+  public get control(): FormControl<unknown> {
+    return (this.ngControl?.control || new FormControl(this.value)) as FormControl<unknown>
+  }
 
   constructor (value: T, @Optional() @Self() protected readonly ngControl: NgControl) {
     this._value = value

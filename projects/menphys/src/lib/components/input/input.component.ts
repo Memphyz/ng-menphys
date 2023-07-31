@@ -21,10 +21,6 @@ export class InputComponent<V> extends InputProperties<V>  {
     this.ngControl && (this.ngControl.valueAccessor || (this.ngControl.valueAccessor = this));
   }
 
-  public get control(): FormControl {
-    return this.ngControl?.control as FormControl || new FormControl(this.value)
-  }
-
   public get types(): typeof InputType {
     return InputType
   }
