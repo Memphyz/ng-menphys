@@ -25,6 +25,7 @@ export class MonthYearComponent extends AbstractControlValueAccessor<Date> imple
   public show = false;
   public monthChangeAnimation = '';
   public currentViewData: ViewMonth[] = [];
+  private starting = true;
 
   @Output() public readonly onMonthChange = new EventEmitter<string>()
 
@@ -127,10 +128,11 @@ export class MonthYearComponent extends AbstractControlValueAccessor<Date> imple
     this.cd.detectChanges();
   }
 
-  private updateScrollUl(smooth = true): void {
+  private updateScrollUl(): void {
     const childs = Array.from(this.list.nativeElement.children);
     const childIndex = childs.findIndex(el => el.classList.contains('active'));
-    childs.at(childIndex)?.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto' });
+    childs.at(childIndex)?.scrollIntoView({ behavior: !this.starting ? 'smooth' : 'auto' });
+    this.starting = false;
   }
 
   private updateViewData(event?: 'up' | 'down'): void {
@@ -184,7 +186,6 @@ export class MonthYearComponent extends AbstractControlValueAccessor<Date> imple
     );
     this.handleUpdate(false);
     this.cd.detectChanges();
-    this.updateScrollUl();
   }
 
   private initializeCurrentView(): void {
@@ -205,7 +206,7 @@ export class MonthYearComponent extends AbstractControlValueAccessor<Date> imple
       });
     });
     this.cd.detectChanges();
-    this.updateScrollUl(false);
+    this.updateScrollUl();
   }
 
 
