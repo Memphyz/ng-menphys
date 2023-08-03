@@ -36,7 +36,7 @@ export class TimeComponent extends AbstractControlValueAccessor<Date> implements
 
   public ngAfterViewInit(): void {
     this.invalid = !this.isValidDate();
-    this.cd.detectChanges();
+    this.cd.detectChanges()
   }
 
   public ngOnInit(): void {
@@ -54,8 +54,15 @@ export class TimeComponent extends AbstractControlValueAccessor<Date> implements
       )
       .subscribe((data) => {
         this.value = data;
+        this.handleFormatData();
         this.cd.detectChanges();
       });
+    this.handleUpdateValueByNgModel();
+    if (this.value) {
+      this.hours = String(this.value.getHours());
+      this.minutes = String(this.value.getMinutes());
+      this.seconds = String(this.value.getSeconds());
+    }
     this.handleFormatData();
   }
 
@@ -101,7 +108,6 @@ export class TimeComponent extends AbstractControlValueAccessor<Date> implements
       return undefined;
     }
     if (number > Number(max)) {
-      console.log(max)
       return max;
     }
     if (value.length < 2) {

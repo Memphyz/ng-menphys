@@ -1,7 +1,7 @@
 import type { AfterViewInit, } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { ChangeDetectorRef, Component, Inject, Optional, Self, type OnInit } from '@angular/core';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { type ControlValueAccessor, NgControl } from '@angular/forms';
 import { AbstractControlValueAccessor } from '@menphys/abstracts/control-accessor.abstract';
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { ModuleConfig } from '@menphys/menphys.module';
@@ -21,17 +21,23 @@ export class CalendarComponent extends AbstractControlValueAccessor<Date> implem
   private ghosts: number[];
   public visibleValue = this.value || new Date();
 
-  constructor (@Inject('config') private readonly config: ModuleConfig, public readonly cd: ChangeDetectorRef, @Optional() @Self() protected override readonly ngControl: NgControl) {
+  constructor (@Inject('config') private readonly config: ModuleConfig, public readonly cd: ChangeDetectorRef, @Inject(NgControl) @Optional() @Self() protected override readonly ngControl: NgControl) {
     super(new Date(), ngControl);
-    this.ngControl && (this.ngControl.valueAccessor || (this.ngControl.valueAccessor = this));
-    cd.detach()
+    cd.detach();
   }
 
   public ngAfterViewInit(): void {
-    this.cd.detectChanges()
+    this.cd.detectChanges();
   }
 
   public ngOnInit(): void {
+    this.handleUpdateValueByNgModel();
+    this.value && (this.visibleValue = this.value);
+    this.updateInfos();
+  }
+
+  public handleUpdateValue(): void {
+    this.value = this.visibleValue;
     this.updateInfos();
   }
 
@@ -51,8 +57,9 @@ export class CalendarComponent extends AbstractControlValueAccessor<Date> implem
   }
 
   public handleSelect(day: number): void {
-    console.log(new Date(this.value.getFullYear(), this.value.getMonth(), day));
-    this.cd.detectChanges();
+    this.value = new Date(this.visibleValue?.getFullYear(), this.visibleValue?.getMonth(), day, this.visibleValue?.getHours(), this.visibleValue?.getMinutes(), this.visibleValue?.getSeconds());
+    this.visibleValue = this.value;
+    this.updateInfos();
   }
 
   public getWeekdays(weekIndex: number): Day[] {
@@ -76,7 +83,7 @@ export class CalendarComponent extends AbstractControlValueAccessor<Date> implem
         disabled: false,
         current: false
       }
-    })
+    });
     if (this.ghosts.length) {
       this.previeus = this.getLastDaysPrevieousMonth();
     }

@@ -9,7 +9,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class InputsViewComponent {
 
   public form = new FormBuilder().group({
-    control: [ { value: null, disabled: false }, Validators.required ]
+    control: [ { value: new Date(2022, 3, 5, 0, 0, 0), disabled: false }, Validators.required ]
   })
 
 }

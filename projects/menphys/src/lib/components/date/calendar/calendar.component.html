@@ -1,6 +1,7 @@
 <menphys-month-year
   [(ngModel)]="visibleValue"
-  (ngModelChange)="cd.detectChanges()"
+  (ngModelChange)="handleUpdateValue()"
+
 />
 <table>
   <thead>
@@ -31,4 +32,7 @@
   </tbody>
 
 </table>
-<menphys-time />
+<menphys-time
+  [(ngModel)]="visibleValue"
+  (ngModelChange)="handleUpdateValue()"
+/>

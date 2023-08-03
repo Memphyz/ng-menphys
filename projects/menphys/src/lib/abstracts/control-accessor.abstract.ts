@@ -1,7 +1,6 @@
-import { Optional, Self } from "@angular/core";
-import { AbstractControl, ControlValueAccessor, FormControl, NgControl } from "@angular/forms";
+import { ControlValueAccessor, FormControl, NgControl, NgModel } from "@angular/forms";
 
-export abstract class AbstractControlValueAccessor<T> implements ControlValueAccessor {
+export abstract class AbstractControlValueAccessor<T, A = unknown> implements ControlValueAccessor {
 
   /**
    * Call writeValue method on attribute "value" change
@@ -64,8 +63,15 @@ export abstract class AbstractControlValueAccessor<T> implements ControlValueAcc
     return (this.ngControl?.control || new FormControl(this.value)) as FormControl<unknown>
   }
 
-  constructor (value: T, @Optional() @Self() protected readonly ngControl: NgControl) {
-    this._value = value
+  constructor (value: T, protected readonly ngControl: NgControl, protected readonly self?: ControlValueAccessor) {
+    if (!value) {
+      this._value = value;
+    }
+    this.ngControl && (ngControl.valueAccessor || (ngControl.valueAccessor = this));
+  }
+
+  protected handleUpdateValueByNgModel(): void {
+    this._value ||= this.ngControl instanceof NgModel ? this.ngControl?.model : this.ngControl?.control?.getRawValue()
   }
 
   /**

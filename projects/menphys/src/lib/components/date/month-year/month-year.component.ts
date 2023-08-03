@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Inject, Input, Optional, Output, Self, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Inject, OnInit, Optional, Output, Self, ViewChild } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { AbstractControlValueAccessor } from '@menphys/abstracts/control-accessor.abstract';
@@ -16,7 +16,7 @@ interface ViewMonth {
   templateUrl: './month-year.component.html',
   styleUrls: [ './month-year.component.scss' ],
 })
-export class MonthYearComponent extends AbstractControlValueAccessor<Date> implements AfterViewInit, ControlValueAccessor {
+export class MonthYearComponent extends AbstractControlValueAccessor<Date> implements AfterViewInit, ControlValueAccessor, OnInit {
 
   public memValue = this.value;
   public year = this.currentYear;
@@ -31,9 +31,8 @@ export class MonthYearComponent extends AbstractControlValueAccessor<Date> imple
 
   @ViewChild('listRef', { static: true }) list: ElementRef<HTMLUListElement>;
 
-  constructor (@Inject('config') private readonly config: ModuleConfig, private readonly cd: ChangeDetectorRef, @Optional() @Self() protected override readonly ngControl: NgControl) {
+  constructor (@Inject('config') private readonly config: ModuleConfig, private readonly cd: ChangeDetectorRef, @Inject(NgControl) @Optional() @Self() protected override readonly ngControl: NgControl) {
     super(new Date(), ngControl);
-    this.ngControl && (this.ngControl.valueAccessor || (this.ngControl.valueAccessor = this));
     this.cd.detach();
   }
 
@@ -48,9 +47,15 @@ export class MonthYearComponent extends AbstractControlValueAccessor<Date> imple
     return this.value?.getFullYear() || new Date().getFullYear();
   }
 
+  public ngOnInit(): void {
+    this.handleUpdateValueByNgModel();
+    this.cd.detectChanges();
+  }
+
   public ngAfterViewInit(): void {
     this.memValue ||= this.value || new Date();
     this.updateViewData();
+
     this.cd.detectChanges();
   }
 
@@ -189,6 +194,9 @@ export class MonthYearComponent extends AbstractControlValueAccessor<Date> imple
   }
 
   private initializeCurrentView(): void {
+    if (!this.memValue) {
+      return undefined;
+    }
     const monthEarlierIndex = this.memValue.getMonth() - 2;
     const year = monthEarlierIndex < 0 ? this.memValue.getFullYear() - 1 : this.memValue.getFullYear();
     const monthsEarlier = new Date(year,
